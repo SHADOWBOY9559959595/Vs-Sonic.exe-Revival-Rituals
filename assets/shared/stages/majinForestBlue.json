@@ -1,0 +1,15 @@
+{
+	"directory": "stages/majinforestblue", 
+	"defaultZoom": 0.7,
+	"stageUI": "",
+
+	"boyfriend": [ 750, 20 ],
+	"girlfriend": [ 300, -145 ],
+	"opponent": [ -150, -100 ],
+	"hide_girlfriend": true,
+
+	"camera_boyfriend": [-220, -50],
+	"camera_opponent": [300, -120],
+	"camera_girlfriend": [-500, 140],
+	"camera_speed": 1
+}

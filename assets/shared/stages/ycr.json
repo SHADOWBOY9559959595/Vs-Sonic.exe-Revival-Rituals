@@ -1,0 +1,15 @@
+{
+	"directory": "stages/ycr",
+	"defaultZoom": 0.75,
+	"stageUI": "",
+
+	"boyfriend": [ 920, -40 ],
+	"girlfriend": [ 320, -50 ],
+	"opponent": [ 100, -30],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-220, -100],
+	"camera_opponent": [150, -50],
+	"camera_girlfriend": [25, -10],
+	"camera_speed": 1
+}

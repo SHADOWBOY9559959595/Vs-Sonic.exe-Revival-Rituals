@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TitleBG .png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="TitleBG 0000" x="0" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0001" x="1280" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0002" x="2560" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0003" x="3840" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0004" x="5120" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0005" x="6400" y="0" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0006" x="0" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0007" x="1280" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0008" x="2560" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0009" x="3840" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0010" x="5120" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0011" x="6400" y="720" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0012" x="0" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0013" x="1280" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0014" x="2560" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0015" x="3840" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0016" x="5120" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0017" x="6400" y="1440" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0018" x="0" y="2160" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0019" x="1280" y="2160" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0020" x="2560" y="2160" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0021" x="3840" y="2160" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0022" x="5120" y="2160" width="1280" height="720"/>
+	<SubTexture name="TitleBG 0023" x="6400" y="2160" width="1280" height="720"/>
+</TextureAtlas>

@@ -1,0 +1,15 @@
+{
+	"directory": "stages/fleetway", 
+	"defaultZoom": 0.6,
+	"stageUI": "",
+
+	"boyfriend": [ 2000, 400 ],
+	"girlfriend": [ 500, -145 ],
+	"opponent": [ 600, -400 ],
+	"hide_girlfriend": true,
+
+	"camera_boyfriend": [-220, -50],
+	"camera_opponent": [200, 0],
+	"camera_girlfriend": [25, 140],
+	"camera_speed": 1
+}
