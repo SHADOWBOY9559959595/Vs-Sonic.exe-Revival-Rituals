@@ -23,6 +23,8 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
+import backend.MusicBeatState;
+
 using StringTools;
 
 class Cache extends MusicBeatState
@@ -44,13 +46,10 @@ class Cache extends MusicBeatState
 		bitmapData = new Map<String,FlxGraphic>();
 		bitmapData2 = new Map<String,FlxGraphic>();
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBG'));
-		menuBG.screenCenter();
-		add(menuBG);
-
 		shitz = new FlxText(12, 630, 300, "Loading...", 12);
 		shitz.scrollFactor.set();
 		shitz.setFormat("VCR OSD Mono", 50, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		shitz.screenCenter(XY);
 		add(shitz);
 
 		#if cpp
@@ -103,7 +102,7 @@ class Cache extends MusicBeatState
 
 
 		#end
-		FlxG.switchState(new states.IntroVideoState());
+		MusicBeatState.switchState(new states.IntroVideoState());
 	}
 
 }
