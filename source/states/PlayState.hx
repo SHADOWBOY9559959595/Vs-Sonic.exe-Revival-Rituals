@@ -2316,6 +2316,8 @@ class PlayState extends MusicBeatState
 						camFollow.setPosition(character.getMidpoint().x + offsetX, character.getMidpoint().y - 150);
 					case "idle" | "idle-alt" | "idle-loop" | "singLEFTmiss" | "singDOWNmiss" | "singUPmiss" | "singRIGHTmiss" | "danceLeft" | "danceRight":
 						camFollow.setPosition(character.getMidpoint().x + offsetX, character.getMidpoint().y - 100);
+					default:
+						camFollow.setPosition(character.getMidpoint().x + offsetX, character.getMidpoint().y - 100);
 				}
 		
 				camFollow.x += character.cameraPosition[0] + cameraOffset[0];
