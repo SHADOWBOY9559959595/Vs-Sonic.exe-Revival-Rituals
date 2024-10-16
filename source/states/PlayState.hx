@@ -2307,7 +2307,7 @@ class PlayState extends MusicBeatState
 		
 				switch (character.animation.curAnim.name) {
 					case "singLEFT" | "singLEFT-loop" | "singLEFT-alt":
-						camFollow.setPosition(character.getMidpoint().x + offsetX - 50, character.getMidpoint().y - 100);
+						camFollow.setPosition(character.getMidpoint().x + offsetX - 25, character.getMidpoint().y - 100);
 					case "singRIGHT" | "singRIGHT-loop" | "singRIGHT-alt":
 						camFollow.setPosition(character.getMidpoint().x + offsetX + 50, character.getMidpoint().y - 100);
 					case "singDOWN" | "singDOWN-loop" | "singDOWN-alt":
@@ -3265,6 +3265,27 @@ class PlayState extends MusicBeatState
 				}
 			case 'Window fucking shakes':
 			shakescreen();
+			
+			case 'Set Cam Follow':
+    			if (value1 == "dad")
+    			{
+        			camFollow.setPosition(dad.getMidpoint().x, dad.getMidpoint().y);	
+					isCameraOnForcedPos = true;			
+    			}
+    			else if (value1 == "bf")
+    			{
+        			camFollow.setPosition(boyfriend.getMidpoint().x, boyfriend.getMidpoint().y);	
+					isCameraOnForcedPos = true;			
+    			}
+				else if (value1 == "reset")
+					{
+						isCameraOnForcedPos = false;		
+						moveCameraSection();	
+					}
+    			else
+    			{
+    			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
+    			}
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
