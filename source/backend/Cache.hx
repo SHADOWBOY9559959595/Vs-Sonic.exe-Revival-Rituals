@@ -102,7 +102,7 @@ class Cache extends MusicBeatState
 
 
 		#end
-		MusicBeatState.switchState(new states.IntroVideoState());
+		FlxG.switchState(new states.IntroVideoState());
 	}
 
 }

@@ -40,7 +40,7 @@ class IntroVideoState extends MusicBeatState
             var video:VideoHandler = new VideoHandler();
             #if (hxCodec >= "3.0.0")
             video.play(introvideo);
-            video.onEndReached.add(function() // REMOVE THE SPACE BETWEEN on AND End!!!!!!
+            video.onEndReached.add(function()
 				{
                     MusicBeatState.switchState(new TitleState());
                 }, true);
