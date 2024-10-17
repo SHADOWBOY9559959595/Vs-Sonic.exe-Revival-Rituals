@@ -133,8 +133,12 @@ class PlayState extends MusicBeatState
 
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
+	public var BF2_X:Float = 870;
+	public var BF2_Y:Float = 200;
 	public var DAD_X:Float = 100;
 	public var DAD_Y:Float = 100;
+	public var DAD2_X:Float = 0;
+	public var DAD2_Y:Float = 0;
 	public var GF_X:Float = 400;
 	public var GF_Y:Float = 130;
 
@@ -146,7 +150,9 @@ class PlayState extends MusicBeatState
 	public var playbackRate(default, set):Float = 1;
 
 	public var boyfriendGroup:FlxSpriteGroup;
+	public var boyfriend2Group:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
+	public var dad2Group:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
 	public static var curStage:String = '';
 	public static var stageUI:String = "normal";
@@ -168,8 +174,10 @@ class PlayState extends MusicBeatState
 	public var vocals:FlxSound;
 	public var opponentVocals:FlxSound;
 
+	public var dad2:Character = null;
 	public var dad:Character = null;
 	public var gf:Character = null;
+	public var boyfriend2:Character = null;
 	public var boyfriend:Character = null;
 
 	public var notes:FlxTypedGroup<Note>;
@@ -249,6 +257,8 @@ class PlayState extends MusicBeatState
 
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
+	public var boyfriend2CameraOffset:Array<Float> = null;
+	public var opponent2CameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
 	#if DISCORD_ALLOWED
@@ -453,10 +463,24 @@ class PlayState extends MusicBeatState
 				stageUI = "pixel";
 		}
 
+		if (SONG.isBf2)
+			{
+				BF2_X = stageData.boyfriend2[0];
+				BF2_Y = stageData.boyfriend2[1];
+			}
+
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
+
 		GF_X = stageData.girlfriend[0];
 		GF_Y = stageData.girlfriend[1];
+		
+		if (SONG.isDad2)
+			{		
+				DAD2_X = stageData.opponent2[0];
+				DAD2_Y = stageData.opponent2[1];
+			}
+
 		DAD_X = stageData.opponent[0];
 		DAD_Y = stageData.opponent[1];
 
@@ -467,16 +491,43 @@ class PlayState extends MusicBeatState
 		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
 			boyfriendCameraOffset = [0, 0];
 
+		if (SONG.isBf2)
+			{
+				boyfriend2CameraOffset = stageData.camera_boyfriend2;
+				if(boyfriend2CameraOffset == null)
+					boyfriend2CameraOffset = [0, 0];
+			}
+
+
 		opponentCameraOffset = stageData.camera_opponent;
 		if(opponentCameraOffset == null)
 			opponentCameraOffset = [0, 0];
+
+		if (SONG.isDad2)
+			{		
+				opponent2CameraOffset = stageData.camera_opponent2;
+				if(opponent2CameraOffset == null)
+					opponent2CameraOffset = [0, 0];
+			}
 
 		girlfriendCameraOffset = stageData.camera_girlfriend;
 		if(girlfriendCameraOffset == null)
 			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
+
+		if (SONG.isBf2)
+			{
+				boyfriend2Group = new FlxSpriteGroup(BF2_X, BF2_Y);
+			}
+
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
+
+		if (SONG.isDad2)
+			{
+				dad2Group = new FlxSpriteGroup(DAD2_X, DAD2_Y);
+			}
+
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
 
 		// use this for 4:3 aspect ratio shit lmao
@@ -516,7 +567,9 @@ class PlayState extends MusicBeatState
 
 		add(gfGroup);
 		add(dadGroup);
+		add(dad2Group);
 		add(boyfriendGroup);
+		add(boyfriend2Group);
 
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		luaDebugGroup = new FlxTypedGroup<psychlua.DebugLuaText>();
@@ -570,10 +623,25 @@ class PlayState extends MusicBeatState
 			startCharacterScripts(gf.curCharacter);
 		}
 
+		if (SONG.isDad2)
+			{
+				dad2 = new Character(0, 0, SONG.player5);
+				startCharacterPos(dad2, true);
+				dad2Group.add(dad2);
+			}
+
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
 		startCharacterScripts(dad.curCharacter);
+
+		if (SONG.isBf2)
+			{
+				boyfriend2 = new Character(0, 0, SONG.player4);
+				startCharacterPos(boyfriend2);
+				boyfriend2Group.add(boyfriend2);
+				GameOverSubstate.resetVariables();
+			}
 
 		boyfriend = new Character(0, 0, SONG.player1, true);
 		startCharacterPos(boyfriend);
@@ -1636,10 +1704,12 @@ class PlayState extends MusicBeatState
 	}
 	public function addBehindBF(obj:FlxBasic)
 	{
+		insert(members.indexOf(boyfriend2Group), obj);
 		insert(members.indexOf(boyfriendGroup), obj);
 	}
 	public function addBehindDad(obj:FlxBasic)
 	{
+		insert(members.indexOf(dad2Group), obj);
 		insert(members.indexOf(dadGroup), obj);
 	}
 
@@ -2904,7 +2974,6 @@ class PlayState extends MusicBeatState
 		
 				// Check if the bars have already been created
 				if (topBar == null || botBar == null) {
-					// Initialize topBar and botBar if they are null
 					topBar = new FlxSprite(0, -Std.parseInt(value1)).makeGraphic(1280, Std.parseInt(value1), FlxColor.BLACK);
 					topBar.scrollFactor.set();
 					topBar.camera = camOther;
@@ -2920,18 +2989,16 @@ class PlayState extends MusicBeatState
 				}
 		
 				if (flValue1 == null || flValue1 == 0) {
-					// Tween to move the bars out of the screen
 					FlxTween.tween(camHUD, {alpha: 1}, flValue2, {ease: FlxEase.quartInOut});
 					FlxTween.tween(topBar, {y: -topBar.height}, flValue2, {ease: FlxEase.quadOut});
 					FlxTween.tween(botBar, {y: 720 + botBar.height}, flValue2, {ease: FlxEase.quadOut});
 				} else if (flValue1 > 0.1) {
-					// Tween to move the bars into view
 					FlxTween.tween(camHUD, {alpha: 0}, flValue2, {ease: FlxEase.quartInOut});
 					FlxTween.tween(topBar, {y: 0}, flValue2, {ease: FlxEase.quadOut});
 					FlxTween.tween(botBar, {y: 720 - botBar.height}, flValue2, {ease: FlxEase.quadOut});
 				}
 	
-				case 'Pickel': // Original reference
+				case 'Pickel':
 				if (value1 == "ye") {
 					stageUI = "pixel";
 			
@@ -2939,23 +3006,20 @@ class PlayState extends MusicBeatState
 					timeBar.visible = false;
 					timeTxt.visible = false;
 			
-					// Reload notes and make sure they are pixel-style
 					removeStatics();
 					generateStaticArrows(0);
 					generateStaticArrows(1);
 			
 					for (note in notes) {
-						// Ensure sustain note scales properly for pixel stages
 						if (note.isSustainNote) {
-							note.scale.set(note.scale.x, PlayState.daPixelZoom); // Apply pixel scale
-							note.updateHitbox(); // Fix sustain tail hitbox for pixel notes
+							note.scale.set(note.scale.x, PlayState.daPixelZoom);
+							note.updateHitbox();
 						} else {
-							note.scale.set(PlayState.daPixelZoom); // Apply pixel scale to regular notes too
+							note.scale.set(PlayState.daPixelZoom);
 						}
-						note.loadPixelNoteAnims(); // Load pixel note animations
+						note.loadPixelNoteAnims();
 					}
 			
-					// Adjust UI positions for pixel mode
 					updateIconsPosition();
 					iconP1.updateHitbox();
 					iconP2.updateHitbox();
@@ -2973,22 +3037,19 @@ class PlayState extends MusicBeatState
 					timeBar.visible = !ClientPrefs.data.hideHud;
 					timeTxt.visible = !ClientPrefs.data.hideHud;
 			
-					// Reload notes and switch back to normal stage assets
 					removeStatics();
 					generateStaticArrows(0);
 					generateStaticArrows(1);
 			
 					for (note in notes) {
-						// Reset scaling for normal mode
 						if (note.isSustainNote) {
-							note.scale.set(note.scale.x, 1); // Reset to normal scale
-							note.updateHitbox(); // Reset hitbox for normal notes
+							note.scale.set(note.scale.x, 1);
+							note.updateHitbox();
 						} else {
-							note.scale.set(note.scale.x, 1); // Reset to normal scale for regular notes
+							note.scale.set(note.scale.x, 1);
 						}
 					}
 			
-					// Reset UI positions for normal mode
 					healthBar.x -= 137;
 					iconP1.x -= 137;
 					iconP2.x -= 137;
@@ -3005,40 +3066,6 @@ class PlayState extends MusicBeatState
 					{
 						FlxTween.angle(tospin, 0, 360, 0.2, {ease: FlxEase.quintOut});
 					});
-			case 'Song End':
-				if (flValue1 == null) flValue1 = 0.7;
-						
-				camHUD.alpha = 1;
-					
-				// Check if the bars have already been created
-				if (topBar == null || botBar == null) {
-					// Initialize topBar and botBar off-screen
-					topBar = new FlxSprite(0, -720).makeGraphic(1280, 720, FlxColor.BLACK);
-					topBar.scrollFactor.set();
-					topBar.camera = camOther;
-					topBar.screenCenter(X);
-			
-					botBar = new FlxSprite(0, 720).makeGraphic(1280, 720, FlxColor.BLACK);
-					botBar.scrollFactor.set();
-					botBar.camera = camOther;
-					botBar.screenCenter(X);
-					
-					add(topBar);
-					add(botBar);
-				}
-			
-				if (flValue1 == null || flValue1 == 0) {
-					// Tween to move the bars out of the screen
-					FlxTween.tween(camHUD, {alpha: 1}, flValue1, {ease: FlxEase.quartInOut});
-					FlxTween.tween(topBar, {y: -topBar.height}, flValue1, {ease: FlxEase.quadOut});
-					FlxTween.tween(botBar, {y: 720}, flValue1, {ease: FlxEase.quadOut});
-				} else if (flValue1 > 0.1) {
-					// Tween to move the bars into view
-					FlxTween.tween(camHUD, {alpha: 0}, flValue1, {ease: FlxEase.quartInOut});
-					FlxTween.tween(topBar, {y: 0}, flValue1, {ease: FlxEase.quadOut});
-					FlxTween.tween(botBar, {y: 720 - botBar.height}, flValue1, {ease: FlxEase.quadOut});
-				}
-
 			case 'sonicspook':
 				trace('JUMPSCARE aaaa');
 	
@@ -3069,13 +3096,11 @@ class PlayState extends MusicBeatState
 
 				for (note in unspawnNotes) {
 					if (note.isSustainNote) {
-						//note.scale.set(note.scale.x, 1); // Reset or apply any necessary scale
-						note.updateHitbox(); // Ensure hitboxes are correct for the new skin
+						note.updateHitbox();
 					} else {
-						note.scale.set(1, 1); // Apply normal scale
+						note.scale.set(1, 1);
 					}
-					// Reload the note skin here by calling your custom reload method
-					note.reloadNote('noteSkins/NOTE_assets-' + value1); // Replace with your custom sprite path
+					note.reloadNote('noteSkins/NOTE_assets-' + value1);
 				}				
 							
 				for (strum in strumLineNotes) {
@@ -3995,6 +4020,9 @@ class PlayState extends MusicBeatState
 		// play character anims
 		var char:Character = boyfriend;
 		if((note != null && note.gfNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].gfSection)) char = gf;
+		//if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
+		//if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = bf2;
+
 
 		if(char != null && (note == null || !note.noMissAnimation) && char.hasMissAnimations)
 		{

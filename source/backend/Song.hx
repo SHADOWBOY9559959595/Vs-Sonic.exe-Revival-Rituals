@@ -16,6 +16,8 @@ typedef SwagSong =
 
 	var player1:String;
 	var player2:String;
+	var player4:String; //BF	
+	var player5:String; //Dad
 	var gfVersion:String;
 	var stage:String;
 
@@ -26,6 +28,9 @@ typedef SwagSong =
 	
 	@:optional var arrowSkin:String;
 	@:optional var splashSkin:String;
+
+	@:optional var isDad2:Bool;	
+	@:optional var isBf2:Bool;	
 }
 
 class Song
@@ -45,6 +50,10 @@ class Song
 	public var stage:String;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
+	public var isDad2:Bool = true;
+	public var isBf2:Bool = true;
+	public var player4:String = 'bf-Pixel';
+	public var player5:String = 'ycr';
 	public var gfVersion:String = 'gf';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format

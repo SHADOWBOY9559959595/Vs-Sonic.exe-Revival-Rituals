@@ -11,12 +11,16 @@ typedef StageFile = {
 	var stageUI:String;
 
 	var boyfriend:Array<Dynamic>;
+	var boyfriend2:Array<Dynamic>;
 	var girlfriend:Array<Dynamic>;
 	var opponent:Array<Dynamic>;
+	var opponent2:Array<Dynamic>;
 	var hide_girlfriend:Bool;
 
 	var camera_boyfriend:Array<Float>;
+	var camera_boyfriend2:Array<Float>;
 	var camera_opponent:Array<Float>;
+	var camera_opponent2:Array<Float>;
 	var camera_girlfriend:Array<Float>;
 	var camera_speed:Null<Float>;
 }
@@ -31,12 +35,16 @@ class StageData {
 			stageUI: "normal",
 
 			boyfriend: [770, 100],
+			boyfriend2: [870, 200],
 			girlfriend: [400, 130],
 			opponent: [100, 100],
+			opponent2: [0, 0],
 			hide_girlfriend: false,
 
 			camera_boyfriend: [0, 0],
+			camera_boyfriend2: [100, 100],
 			camera_opponent: [0, 0],
+			camera_opponent2: [-100, -100],
 			camera_girlfriend: [0, 0],
 			camera_speed: 1
 		};
