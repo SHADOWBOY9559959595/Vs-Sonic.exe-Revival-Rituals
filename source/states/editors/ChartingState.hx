@@ -226,10 +226,12 @@ class ChartingState extends MusicBeatState
 				events: [],
 				bpm: 150.0,
 				needsVoices: true,
+				isDad2: false,
+				isBf2: false,
 				player1: 'bf',
 				player2: 'dad',
 				player4: 'bf-Pixel',
-				player5: 'ycr',
+				player5: 'dad',
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage'
@@ -573,7 +575,43 @@ class ChartingState extends MusicBeatState
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
 
-		#if MODS_ALLOWED
+		// New player4DropDown
+		var player4DropDown = new FlxUIDropDownMenu(player2DropDown.x, player2DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			{
+				_song.player4 = characters[Std.parseInt(character)];
+				updateJsonData();
+				updateHeads();
+			});
+			player4DropDown.selectedLabel = _song.player4;
+			blockPressWhileScrolling.push(player4DropDown);
+		
+			// New player5DropDown
+			var player5DropDown = new FlxUIDropDownMenu(player4DropDown.x, player4DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			{
+				_song.player5 = characters[Std.parseInt(character)];
+				updateJsonData();
+				updateHeads();
+			});
+			player5DropDown.selectedLabel = _song.player5;
+			blockPressWhileScrolling.push(player5DropDown);
+		
+			// New isDad2 checkbox
+			var check_isDad2 = new FlxUICheckBox(10, player5DropDown.y + 40, null, null, "Has another Dad", 100);
+			check_isDad2.checked = _song.isDad2;
+			check_isDad2.callback = function()
+			{
+				_song.isDad2 = check_isDad2.checked;
+			};
+		
+			// New isBf2 checkbox
+			var check_isBf2 = new FlxUICheckBox(10, check_isDad2.y + 25, null, null, "Has another BF", 100);
+			check_isBf2.checked = _song.isBf2;
+			check_isBf2.callback = function()
+			{
+				_song.isBf2 = check_isBf2.checked;
+			};
+
+			#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Mods.currentModDirectory + '/stages/'), Paths.getSharedPath('stages/')];
 		for(mod in Mods.getGlobalMods())
 			directories.push(Paths.mods(mod + '/stages/'));
@@ -635,10 +673,16 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
 		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
+		tab_group_song.add(new FlxText(player4DropDown.x, player4DropDown.y - 15, 0, 'boyfriend2:'));
+		tab_group_song.add(new FlxText(player5DropDown.x, player5DropDown.y - 15, 0, 'Opponent2:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
+		tab_group_song.add(check_isDad2);
+		tab_group_song.add(check_isBf2);
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(gfVersionDropDown);
-		tab_group_song.add(player1DropDown);
+		tab_group_song.add(player1DropDown);		
+		tab_group_song.add(player5DropDown);
+		tab_group_song.add(player4DropDown);
 		tab_group_song.add(stageDropDown);
 
 		UI_box.addGroup(tab_group_song);

@@ -515,18 +515,10 @@ class PlayState extends MusicBeatState
 			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
-
-		if (SONG.isBf2)
-			{
-				boyfriend2Group = new FlxSpriteGroup(BF2_X, BF2_Y);
-			}
+		boyfriend2Group = new FlxSpriteGroup(BF2_X, BF2_Y);
 
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
-
-		if (SONG.isDad2)
-			{
-				dad2Group = new FlxSpriteGroup(DAD2_X, DAD2_Y);
-			}
+		dad2Group = new FlxSpriteGroup(DAD2_X, DAD2_Y);
 
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
 
@@ -565,11 +557,21 @@ class PlayState extends MusicBeatState
 			introSoundsSuffix = '-pixel';
 		}
 
-		add(gfGroup);
+		add(gfGroup);	
+
+		if (SONG.isDad2)
+			{		
+				trace("added dad 2");
+				add(dad2Group);
+			}
 		add(dadGroup);
-		add(dad2Group);
+
+		if (SONG.isBf2)
+			{		
+				trace("added bf 2");
+				add(boyfriend2Group);			
+			}
 		add(boyfriendGroup);
-		add(boyfriend2Group);
 
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		luaDebugGroup = new FlxTypedGroup<psychlua.DebugLuaText>();
@@ -640,7 +642,6 @@ class PlayState extends MusicBeatState
 				boyfriend2 = new Character(0, 0, SONG.player4);
 				startCharacterPos(boyfriend2);
 				boyfriend2Group.add(boyfriend2);
-				GameOverSubstate.resetVariables();
 			}
 
 		boyfriend = new Character(0, 0, SONG.player1, true);

@@ -29,8 +29,8 @@ typedef SwagSong =
 	@:optional var arrowSkin:String;
 	@:optional var splashSkin:String;
 
-	@:optional var isDad2:Bool;	
-	@:optional var isBf2:Bool;	
+	var isDad2:Bool;	
+	var isBf2:Bool;	
 }
 
 class Song
