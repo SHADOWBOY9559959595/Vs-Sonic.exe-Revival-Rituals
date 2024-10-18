@@ -639,7 +639,7 @@ class PlayState extends MusicBeatState
 
 		if (SONG.isBf2)
 			{
-				boyfriend2 = new Character(0, 0, SONG.player4);
+				boyfriend2 = new Character(0, 0, SONG.player4, true);
 				startCharacterPos(boyfriend2);
 				boyfriend2Group.add(boyfriend2);
 			}
@@ -1958,11 +1958,11 @@ class PlayState extends MusicBeatState
 			{
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
-				var gottaHitNote:Bool = section.mustHitSection;
+				var gottaHitNote:Bool = section.mustHitSection || section.bf2Section;
 
 				if (songNotes[1] > 3)
 				{
-					gottaHitNote = !section.mustHitSection;
+					gottaHitNote = !section.mustHitSection || section.bf2Section;
 				}
 
 				var oldNote:Note;
@@ -2371,7 +2371,7 @@ class PlayState extends MusicBeatState
 		if (!isCameraOnForcedPos && !endingSong) {
 			var target = SONG.notes[curSection];
 			if (target != null) {
-				var isMustHitSection = target.mustHitSection;
+				var isMustHitSection = target.mustHitSection || target.bf2Section;
 				var character = isMustHitSection ? boyfriend : dad;
 				var offsetX = isMustHitSection ? -100 : 150;
 				var cameraOffset = isMustHitSection ? boyfriendCameraOffset : opponentCameraOffset;
@@ -3333,6 +3333,22 @@ class PlayState extends MusicBeatState
 			callOnScripts('onMoveCamera', ['gf']);
 			return;
 		}
+		if (boyfriend2 != null && SONG.notes[sec].bf2Section)
+			{
+				camFollow.setPosition(boyfriend2.getMidpoint().x, boyfriend2.getMidpoint().y);
+				camFollow.x += boyfriend2.cameraPosition[0] + boyfriend2CameraOffset[0];
+				camFollow.y += boyfriend2.cameraPosition[1] + boyfriend2CameraOffset[1];
+				tweenCamIn();
+				return;
+			}
+		if (dad2 != null && SONG.notes[sec].dad2Section)
+			{
+				camFollow.setPosition(dad2.getMidpoint().x, dad2.getMidpoint().y);
+				camFollow.x += dad2.cameraPosition[0] + opponent2CameraOffset[0];
+				camFollow.y += dad2.cameraPosition[1] + opponent2CameraOffset[1];
+				tweenCamIn();
+				return;
+			}
 
 		var isDad:Bool = (SONG.notes[sec].mustHitSection != true);
 		moveCamera(isDad);
@@ -4021,9 +4037,8 @@ class PlayState extends MusicBeatState
 		// play character anims
 		var char:Character = boyfriend;
 		if((note != null && note.gfNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].gfSection)) char = gf;
-		//if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
-		//if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = bf2;
-
+		if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
+		if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = boyfriend2;
 
 		if(char != null && (note == null || !note.noMissAnimation) && char.hasMissAnimations)
 		{
@@ -4064,6 +4079,8 @@ class PlayState extends MusicBeatState
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + altAnim;
 			if(note.gfNote) char = gf;
+			if(note.dad2Note) char = dad2;
+			if(note.bf2Note) char = boyfriend2;
 
 			if(char != null)
 			{

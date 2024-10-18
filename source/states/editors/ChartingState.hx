@@ -55,6 +55,8 @@ class ChartingState extends MusicBeatState
 		'Hey!',
 		'Hurt Note',
 		'GF Sing',
+		'Dad2 Sing',
+		'BF2 Sing',
 		'No Animation',
 		'Static Note',
 		'Phantom Note'
@@ -575,8 +577,7 @@ class ChartingState extends MusicBeatState
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
 
-		// New player4DropDown
-		var player4DropDown = new FlxUIDropDownMenu(player2DropDown.x, player2DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var player4DropDown = new FlxUIDropDownMenu(player2DropDown.x + 130, player2DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 			{
 				_song.player4 = characters[Std.parseInt(character)];
 				updateJsonData();
@@ -585,8 +586,7 @@ class ChartingState extends MusicBeatState
 			player4DropDown.selectedLabel = _song.player4;
 			blockPressWhileScrolling.push(player4DropDown);
 		
-			// New player5DropDown
-			var player5DropDown = new FlxUIDropDownMenu(player4DropDown.x, player4DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			var player5DropDown = new FlxUIDropDownMenu(player4DropDown.x, player4DropDown.y + 50, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 			{
 				_song.player5 = characters[Std.parseInt(character)];
 				updateJsonData();
@@ -595,16 +595,15 @@ class ChartingState extends MusicBeatState
 			player5DropDown.selectedLabel = _song.player5;
 			blockPressWhileScrolling.push(player5DropDown);
 		
-			// New isDad2 checkbox
-			var check_isDad2 = new FlxUICheckBox(10, player5DropDown.y + 40, null, null, "Has another Dad", 100);
+			var check_isDad2 = new FlxUICheckBox(10, 310, null, null, "Has another Dad", 100);
 			check_isDad2.checked = _song.isDad2;
 			check_isDad2.callback = function()
 			{
 				_song.isDad2 = check_isDad2.checked;
+
 			};
 		
-			// New isBf2 checkbox
-			var check_isBf2 = new FlxUICheckBox(10, check_isDad2.y + 25, null, null, "Has another BF", 100);
+			var check_isBf2 = new FlxUICheckBox(10, 270, null, null, "Has another BF", 100);
 			check_isBf2.checked = _song.isBf2;
 			check_isBf2.callback = function()
 			{
@@ -693,6 +692,8 @@ class ChartingState extends MusicBeatState
 	var stepperBeats:FlxUINumericStepper;
 	var check_mustHitSection:FlxUICheckBox;
 	var check_gfSection:FlxUICheckBox;
+	var check_dad2Section:FlxUICheckBox;
+	var check_bf2Section:FlxUICheckBox;
 	var check_changeBPM:FlxUICheckBox;
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
@@ -712,9 +713,18 @@ class ChartingState extends MusicBeatState
 		check_gfSection = new FlxUICheckBox(10, check_mustHitSection.y + 22, null, null, "GF section", 100);
 		check_gfSection.name = 'check_gf';
 		check_gfSection.checked = _song.notes[curSec].gfSection;
+
+		check_dad2Section = new FlxUICheckBox(10, check_gfSection.y + 22, null, null, "Dad2 section", 100);
+		check_dad2Section.name = 'check_dad2';
+		check_dad2Section.checked = _song.notes[curSec].dad2Section;
+
+		check_bf2Section = new FlxUICheckBox(10, check_dad2Section.y + 22, null, null, "BF2 section", 100);
+		check_bf2Section.name = 'check_bf2';
+		check_bf2Section.checked = _song.notes[curSec].bf2Section;
+
 		// _song.needsVoices = check_mustHit.checked;
 
-		check_altAnim = new FlxUICheckBox(check_gfSection.x + 120, check_gfSection.y, null, null, "Alt Animation", 100);
+		check_altAnim = new FlxUICheckBox(check_bf2Section.x + 120, check_bf2Section.y, null, null, "Alt Animation", 100);
 		check_altAnim.checked = _song.notes[curSec].altAnim;
 
 		stepperBeats = new FlxUINumericStepper(10, 100, 1, 4, 1, 7, 2);
@@ -943,6 +953,8 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(stepperSectionBPM);
 		tab_group_section.add(check_mustHitSection);
 		tab_group_section.add(check_gfSection);
+		tab_group_section.add(check_dad2Section);
+		tab_group_section.add(check_bf2Section);
 		tab_group_section.add(check_altAnim);
 		tab_group_section.add(check_changeBPM);
 		tab_group_section.add(copyButton);
@@ -1622,6 +1634,17 @@ class ChartingState extends MusicBeatState
 
 					updateGrid();
 					updateHeads();
+				case 'Dad2 section':
+					_song.notes[curSec].dad2Section = check.checked;
+					
+					updateGrid();
+					updateHeads();	
+
+				case 'BF2 section':
+					_song.notes[curSec].bf2Section = check.checked;
+					
+					updateGrid();
+					updateHeads();
 
 				case 'Change BPM':
 					_song.notes[curSec].changeBPM = check.checked;
@@ -2221,7 +2244,7 @@ class ChartingState extends MusicBeatState
 			note.alpha = 1;
 			if(curSelectedNote != null) {
 				var noteDataToCheck:Int = note.noteData;
-				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
 
 				if (curSelectedNote[0] == note.strumTime && ((curSelectedNote[2] == null && noteDataToCheck < 0) || (curSelectedNote[2] != null && curSelectedNote[1] == noteDataToCheck)))
 				{
@@ -2235,7 +2258,7 @@ class ChartingState extends MusicBeatState
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
 					var noteDataToCheck:Int = note.noteData;
-					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
 					if(!playedSound[data]) {
@@ -2250,7 +2273,7 @@ class ChartingState extends MusicBeatState
 						}
 
 						data = note.noteData;
-						if(note.mustPress != _song.notes[curSec].mustHitSection)
+						if(note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section)
 						{
 							data += 4;
 						}
@@ -2667,6 +2690,7 @@ class ChartingState extends MusicBeatState
 
 		stepperBeats.value = getSectionBeats();
 		check_mustHitSection.checked = sec.mustHitSection;
+		check_bf2Section.checked = sec.bf2Section;
 		check_gfSection.checked = sec.gfSection;
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
@@ -2694,7 +2718,7 @@ class ChartingState extends MusicBeatState
 
 	function updateHeads():Void
 	{
-		if (_song.notes[curSec].mustHitSection)
+		if (_song.notes[curSec].mustHitSection || _song.notes[curSec].bf2Section)
 		{
 			leftIcon.changeIcon(characterData.iconP1);
 			rightIcon.changeIcon(characterData.iconP2);
@@ -2814,7 +2838,7 @@ class ChartingState extends MusicBeatState
 				curRenderedNoteType.add(daText);
 				daText.sprTracker = note;
 			}
-			note.mustPress = _song.notes[curSec].mustHitSection;
+			note.mustPress = _song.notes[curSec].mustHitSection || _song.notes[curSec].bf2Section;
 			if(i[1] > 3) note.mustPress = !note.mustPress;
 		}
 
@@ -2905,7 +2929,7 @@ class ChartingState extends MusicBeatState
 		note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 		note.updateHitbox();
 		note.x = Math.floor(daNoteInfo * GRID_SIZE) + GRID_SIZE;
-		if(isNextSection && _song.notes[curSec].mustHitSection != _song.notes[curSec+1].mustHitSection) {
+		if(isNextSection && _song.notes[curSec].mustHitSection && _song.notes[curSec].bf2Section != _song.notes[curSec+1].mustHitSection != _song.notes[curSec+1].bf2Section) {
 			if(daNoteInfo > 3) {
 				note.x -= GRID_SIZE * 4;
 			} else if(daSus != null) {
@@ -2951,6 +2975,8 @@ class ChartingState extends MusicBeatState
 			changeBPM: false,
 			mustHitSection: true,
 			gfSection: false,
+			dad2Section: false,
+			bf2Section: false,
 			sectionNotes: [],
 			altAnim: false
 		};
@@ -2964,7 +2990,7 @@ class ChartingState extends MusicBeatState
 
 		if(noteDataToCheck > -1)
 		{
-			if(note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+			if(note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
 			for (i in _song.notes[curSec].sectionNotes)
 			{
 				if (i != curSelectedNote && i.length > 2 && i[0] == note.strumTime && i[1] == noteDataToCheck)
@@ -2995,7 +3021,7 @@ class ChartingState extends MusicBeatState
 	function deleteNote(note:Note):Void
 	{
 		var noteDataToCheck:Int = note.noteData;
-		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
 
 		if(note.noteData > -1) //Normal Notes
 		{
