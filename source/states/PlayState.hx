@@ -1975,6 +1975,8 @@ class PlayState extends MusicBeatState
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
+				swagNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
+				swagNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
@@ -1993,6 +1995,8 @@ class PlayState extends MusicBeatState
 						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
+						sustainNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
+						sustainNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
 						sustainNote.parent = swagNote;
@@ -3333,7 +3337,8 @@ class PlayState extends MusicBeatState
 			callOnScripts('onMoveCamera', ['gf']);
 			return;
 		}
-		if (boyfriend2 != null && SONG.notes[sec].bf2Section)
+
+		else if (boyfriend2 != null && SONG.notes[sec].bf2Section)
 			{
 				camFollow.setPosition(boyfriend2.getMidpoint().x, boyfriend2.getMidpoint().y);
 				camFollow.x += boyfriend2.cameraPosition[0] + boyfriend2CameraOffset[0];
@@ -3341,7 +3346,8 @@ class PlayState extends MusicBeatState
 				tweenCamIn();
 				return;
 			}
-		if (dad2 != null && SONG.notes[sec].dad2Section)
+
+		else if (dad2 != null && SONG.notes[sec].dad2Section)
 			{
 				camFollow.setPosition(dad2.getMidpoint().x, dad2.getMidpoint().y);
 				camFollow.x += dad2.cameraPosition[0] + opponent2CameraOffset[0];
@@ -4073,8 +4079,9 @@ class PlayState extends MusicBeatState
 			var altAnim:String = note.animSuffix;
 
 			if (SONG.notes[curSection] != null)
-				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection)
+				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !SONG.notes[curSection].dad2Section && !SONG.notes[curSection].bf2Section)
 					altAnim = '-alt';
+			
 
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + altAnim;

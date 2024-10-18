@@ -2718,17 +2718,19 @@ class ChartingState extends MusicBeatState
 
 	function updateHeads():Void
 	{
-		if (_song.notes[curSec].mustHitSection || _song.notes[curSec].bf2Section)
+		if (_song.notes[curSec].mustHitSection)
 		{
 			leftIcon.changeIcon(characterData.iconP1);
 			rightIcon.changeIcon(characterData.iconP2);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+			if (_song.notes[curSec].bf2Section) leftIcon.changeIcon('BF-Pixel');
 		}
 		else
 		{
 			leftIcon.changeIcon(characterData.iconP2);
 			rightIcon.changeIcon(characterData.iconP1);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+			if (_song.notes[curSec].dad2Section) leftIcon.changeIcon('dad');
 		}
 	}
 
