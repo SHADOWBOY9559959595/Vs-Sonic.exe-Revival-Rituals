@@ -2376,9 +2376,30 @@ class PlayState extends MusicBeatState
 			var target = SONG.notes[curSection];
 			if (target != null) {
 				var isMustHitSection = target.mustHitSection;
-				var character = isMustHitSection ? boyfriend : dad;
-				var offsetX = isMustHitSection ? -100 : 150;
-				var cameraOffset = isMustHitSection ? boyfriendCameraOffset : opponentCameraOffset;
+				var bf2Section = target.bf2Section;
+				var dad2Section = target.dad2Section;
+		
+				var character;
+				var offsetX;
+				var cameraOffset;
+		
+				if (bf2Section) {
+					character = boyfriend2;
+					offsetX = -100;
+					cameraOffset = boyfriend2CameraOffset;
+				} else if (dad2Section) {
+					character = dad2;
+					offsetX = 150;
+					cameraOffset = opponent2CameraOffset;
+				} else if (isMustHitSection) {
+					character = boyfriend;
+					offsetX = -100;
+					cameraOffset = boyfriendCameraOffset;
+				} else {
+					character = dad;
+					offsetX = 150;
+					cameraOffset = opponentCameraOffset;
+				}
 		
 				switch (character.animation.curAnim.name) {
 					case "singLEFT" | "singLEFT-loop" | "singLEFT-alt":
@@ -2398,7 +2419,7 @@ class PlayState extends MusicBeatState
 				camFollow.x += character.cameraPosition[0] + cameraOffset[0];
 				camFollow.y += character.cameraPosition[1] + cameraOffset[1];
 			}
-		}		
+		}	
 
 		if (healthBar.bounds.max != null && health > healthBar.bounds.max)
 			health = healthBar.bounds.max;
@@ -2483,8 +2504,13 @@ class PlayState extends MusicBeatState
 				if(!cpuControlled)
 					keysCheck();
 				else
+				{
 					playerDance();
-
+					if(SONG.isBf2)
+						{
+							player2Dance();
+						}		
+				}
 				if(notes.length > 0)
 				{
 					if(startedCountdown)
@@ -3927,7 +3953,13 @@ class PlayState extends MusicBeatState
 			}
 
 			if (!holdArray.contains(true) || endingSong)
+			{
 				playerDance();
+					if(SONG.isBf2)
+					{
+						player2Dance();
+					}		
+			}
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
@@ -4348,6 +4380,16 @@ class PlayState extends MusicBeatState
 		if(boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 #if FLX_PITCH / FlxG.sound.music.pitch #end) * boyfriend.singDuration && anim.startsWith('sing') && !anim.endsWith('miss'))
 			boyfriend.dance();
 	}
+
+	public function player2Dance():Void
+		{
+			if (SONG.isBf2)
+				{	
+					var anim:String = boyfriend2.getAnimationName();
+					if(boyfriend2.holdTimer > Conductor.stepCrochet * (0.0011 #if FLX_PITCH / FlxG.sound.music.pitch #end) * boyfriend2.singDuration && anim.startsWith('sing') && !anim.endsWith('miss'))
+						boyfriend2.dance();
+				}
+		}
 
 	override function sectionHit()
 	{

@@ -2841,8 +2841,11 @@ class ChartingState extends MusicBeatState
 				curRenderedNoteType.add(daText);
 				daText.sprTracker = note;
 			}
-			note.mustPress = _song.notes[curSec].mustHitSection;
-			if(i[1] > 3) note.mustPress = !note.mustPress;
+			note.mustPress = _song.notes[curSec].mustHitSection; 
+
+			if(i[1] > 3 && !_song.notes[curSec].bf2Section) {
+				note.mustPress = !note.mustPress; 
+			}
 		}
 
 		// CURRENT EVENTS
@@ -3021,43 +3024,41 @@ class ChartingState extends MusicBeatState
 		updateNoteUI();
 	}
 
-	function deleteNote(note:Note):Void
-	{
-		var noteDataToCheck:Int = note.noteData;
-		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
+	function deleteNote(note:Note):Void 
+	{ 
+	    var noteDataToCheck:Int = note.noteData; 
+	    if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4; 
 
-		if(note.noteData > -1) //Normal Notes
-		{
-			for (i in _song.notes[curSec].sectionNotes)
-			{
-				if (i[0] == note.strumTime && i[1] == noteDataToCheck)
-				{
-					if(i == curSelectedNote) curSelectedNote = null;
-					//FlxG.log.add('FOUND EVIL NOTE');
-					_song.notes[curSec].sectionNotes.remove(i);
-					break;
-				}
-			}
-		}
-		else //Events
-		{
-			for (i in _song.events)
-			{
-				if(i[0] == note.strumTime)
-				{
-					if(i == curSelectedNote)
-					{
-						curSelectedNote = null;
-						changeEventSelected();
-					}
-					//FlxG.log.add('FOUND EVIL EVENT');
-					_song.events.remove(i);
-					break;
-				}
-			}
-		}
+    	if(note.noteData > -1) //Normal Notes 
+    	{ 
+    	    for (i in _song.notes[curSec].sectionNotes) 
+    	    { 
+    	        if (i[0] == note.strumTime && i[1] == noteDataToCheck) 
+    	        { 
+    	            if(i == curSelectedNote) curSelectedNote = null; 
+    	            _song.notes[curSec].sectionNotes.remove(i); 
+    	            break; 
+    	        } 
+    	    } 
+    	} 
+	    else //Events 
+    	{ 
+        	for (i in _song.events) 
+        	{ 
+        	    if(i[0] == note.strumTime) 
+        	    { 
+        	        if(i == curSelectedNote) 
+        	        { 
+        	            curSelectedNote = null; 
+        	            changeEventSelected(); 
+        	        } 
+        	        _song.events.remove(i); 
+        	        break; 
+        	    } 
+        	} 
+    	} 
 
-		updateGrid();
+    	updateGrid(); 
 	}
 
 	public function doANoteThing(cs, d, style){
