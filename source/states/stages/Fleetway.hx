@@ -106,9 +106,9 @@ class Fleetway extends BaseStage
     
 	function chaosIntro()
         {
-            FlxTween.tween(dad, {x: 600, y: 800}, 0.1, {ease: FlxEase.cubeOut});            
-            camFollow.x += -250;
-            camFollow.y += 700;            
+            FlxTween.tween(dad, {x: 600, y: 800}, 0.1, {ease: FlxEase.cubeOut});    
+            camFollow.x = -225.05;
+            camFollow.y = 463.9;            
             FlxG.camera.zoom = defaultCamZoom;
             camHUD.visible = false;
             dad.visible = false;

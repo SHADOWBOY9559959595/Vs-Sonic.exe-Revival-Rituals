@@ -29,11 +29,11 @@ class TitleState extends MusicBeatState
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
 	var bg:FlxSprite;
-	var sidebar1:FlxSprite;
-    var sidebar2:FlxSprite;
-	var sidebarScrollSpeed:Float = 70; // Adjust this speed as needed
-	var logo:FlxSprite;
+	var logo:FlxSprite;	
+	var spikes:FlxSprite;
+	var spikes2:FlxSprite;
 	var titleEnter:FlxSprite;
+	var vignette:FlxSprite;
 
 	var enterPressed:Bool = false;
 
@@ -51,36 +51,29 @@ class TitleState extends MusicBeatState
 
 			FlxG.mouse.visible = false;		
 
-			bg = new FlxSprite().loadGraphic(Paths.image('TitleState/bg'));
-			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
-			bg.updateHitbox();
-			bg.scrollFactor.set();
-
-			// Scrolling sidebars
-			sidebar1 = new FlxSprite().loadGraphic(Paths.image('TitleState/bars'));
-			sidebar1.updateHitbox();
-			sidebar1.x = FlxG.width - sidebar1.width;
-			sidebar1.y = 0;
-			sidebar1.scrollFactor.set();
-			
-			sidebar2 = new FlxSprite().loadGraphic(Paths.image('TitleState/bars'));
-			sidebar2.updateHitbox();
-			sidebar2.x = FlxG.width - sidebar2.width;
-			sidebar2.y = -sidebar2.height;
-			sidebar2.scrollFactor.set();
+			bg = new FlxSprite().setFrames(Paths.getSparrowAtlas('TitleState/static'));
+			bg.screenCenter(XY);
+			bg.animation.addByPrefix('idle', "anim", 10);
+			bg.animation.play('idle');
 
 			logo = new FlxSprite().loadGraphic(Paths.image('TitleState/logo'));
-			logo.scale.set(0.55, 0.55);
-			logo.screenCenter(X);
-			logo.screenCenter(Y);
-			logo.y += 20;
+			logo.screenCenter(XY);
+			logo.scale.set(0.5, 0.5);
+			logo.y -= 20;
+			logo.x = -650;
 
 			titleEnter = new FlxSprite().setFrames(Paths.getSparrowAtlas('TitleState/titleEnter'));
-			titleEnter.screenCenter(X);
-			titleEnter.y += 50;
+			titleEnter.scale.set(0.7, 0.7);
+			titleEnter.screenCenter(XY);
+			titleEnter.x = 300;
+			titleEnter.y -= 150;
 			titleEnter.animation.addByPrefix('idle', "ENTER IDLE", 24);
 			titleEnter.animation.addByPrefix('pressed', "ENTER PRESSED", 12, false);
 			titleEnter.animation.play('idle');
+
+			vignette = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			vignette.alpha = 0.4;
+			vignette.screenCenter(XY);
 
 			FlxG.sound.play(Paths.sound('TitleLaugh'));
 
@@ -104,31 +97,17 @@ class TitleState extends MusicBeatState
 						
 						});
 
-					add(bg);			
-					add(sidebar1);			
-					add(sidebar2);			
+					add(bg);					
 					add(logo);
+					add(spikes);	
+					add(spikes2);	
 					add(titleEnter);
+					add(vignette);
 				});
 		}
 	override public function update(elapsed:Float):Void
 		{
 			super.update(elapsed);
-
-			// Update sidebar positions for scrolling
-			sidebar1.y += sidebarScrollSpeed * elapsed;
-			sidebar2.y += sidebarScrollSpeed * elapsed;
-			
-			// Reposition sidebars when they move completely off-screen
-			if (sidebar1.y >= FlxG.height)
-			{
-				sidebar1.y = sidebar2.y - sidebar1.height;
-			}
-			
-			if (sidebar2.y >= FlxG.height)
-			{
-			sidebar2.y = sidebar1.y - sidebar2.height;
-			}
 
 			if (FlxG.keys.justPressed.ENTER && !enterPressed)
 				{

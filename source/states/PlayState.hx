@@ -110,7 +110,7 @@ class PlayState extends MusicBeatState
 	];
 
 	//event variables
-	private var isCameraOnForcedPos:Bool = false;
+	public var isCameraOnForcedPos:Bool = false;
 
 	public var boyfriendMap:Map<String, Character> = new Map<String, Character>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
@@ -2375,7 +2375,7 @@ class PlayState extends MusicBeatState
 		if (!isCameraOnForcedPos && !endingSong) {
 			var target = SONG.notes[curSection];
 			if (target != null) {
-				var isMustHitSection = target.mustHitSection || target.bf2Section;
+				var isMustHitSection = target.mustHitSection;
 				var character = isMustHitSection ? boyfriend : dad;
 				var offsetX = isMustHitSection ? -100 : 150;
 				var cameraOffset = isMustHitSection ? boyfriendCameraOffset : opponentCameraOffset;
@@ -4095,6 +4095,7 @@ class PlayState extends MusicBeatState
 			{
 				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
+				char.recalculateDanceIdle();
 			}
 		}
 
@@ -4160,18 +4161,21 @@ class PlayState extends MusicBeatState
 			{
 				char = gf;
 				animCheck = 'cheer';
+				char.recalculateDanceIdle();
 			}
 
 			if(note.dad2Note)
 				{
 					char = dad2;
 					animCheck = 'hey';
+					char.recalculateDanceIdle();
 				}
 
 			if(note.bf2Note)
 				{
 					char = boyfriend2;
 					animCheck = 'hey';
+					char.recalculateDanceIdle();
 				}
 
 			if(char != null)
@@ -4326,6 +4330,16 @@ class PlayState extends MusicBeatState
 			boyfriend.dance();
 		if (dad != null && beat % dad.danceEveryNumBeats == 0 && !dad.getAnimationName().startsWith('sing') && !dad.stunned)
 			dad.dance();
+		if (SONG.isBf2)
+			{		
+				if (boyfriend2 != null && beat % boyfriend2.danceEveryNumBeats == 0 && !boyfriend2.getAnimationName().startsWith('sing') && !boyfriend2.stunned)			
+					boyfriend2.dance();
+			}
+		if (SONG.isDad2)
+			{		
+				if (dad2 != null && beat % dad2.danceEveryNumBeats == 0 && !dad2.getAnimationName().startsWith('sing') && !dad2.stunned)
+					dad2.dance();
+			}
 	}
 
 	public function playerDance():Void
