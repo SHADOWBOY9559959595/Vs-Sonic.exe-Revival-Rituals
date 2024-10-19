@@ -2847,7 +2847,7 @@ class PlayState extends MusicBeatState
 					var split:Array<String> = valuesArray[i].split(',');
 					var duration:Float = 0;
 					var intensity:Float = 0;
-					if(split[0] != null) duration = Std.parseFloat(split[0].trim());
+					if(split[0] != null) duration = Std.parseFloat(split[0].trim());	
 					if(split[1] != null) intensity = Std.parseFloat(split[1].trim());
 					if(Math.isNaN(duration)) duration = 0;
 					if(Math.isNaN(intensity)) intensity = 0;
@@ -4045,6 +4045,7 @@ class PlayState extends MusicBeatState
 		if((note != null && note.gfNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].gfSection)) char = gf;
 		if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
 		if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = boyfriend2;
+		char.recalculateDanceIdle();
 
 		if(char != null && (note == null || !note.noMissAnimation) && char.hasMissAnimations)
 		{
@@ -4088,6 +4089,7 @@ class PlayState extends MusicBeatState
 			if(note.gfNote) char = gf;
 			if(note.dad2Note) char = dad2;
 			if(note.bf2Note) char = boyfriend2;
+			char.recalculateDanceIdle();
 
 			if(char != null)
 			{
@@ -4159,6 +4161,18 @@ class PlayState extends MusicBeatState
 				char = gf;
 				animCheck = 'cheer';
 			}
+
+			if(note.dad2Note)
+				{
+					char = dad2;
+					animCheck = 'hey';
+				}
+
+			if(note.bf2Note)
+				{
+					char = boyfriend2;
+					animCheck = 'hey';
+				}
 
 			if(char != null)
 			{

@@ -577,7 +577,7 @@ class ChartingState extends MusicBeatState
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
 
-		var player4DropDown = new FlxUIDropDownMenu(player2DropDown.x + 130, player2DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var player4DropDown = new FlxUIDropDownMenu(player2DropDown.x + 130, player2DropDown.y + 60, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 			{
 				_song.player4 = characters[Std.parseInt(character)];
 				updateJsonData();
@@ -586,7 +586,7 @@ class ChartingState extends MusicBeatState
 			player4DropDown.selectedLabel = _song.player4;
 			blockPressWhileScrolling.push(player4DropDown);
 		
-			var player5DropDown = new FlxUIDropDownMenu(player4DropDown.x, player4DropDown.y + 50, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			var player5DropDown = new FlxUIDropDownMenu(player4DropDown.x, player4DropDown.y + 60, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 			{
 				_song.player5 = characters[Std.parseInt(character)];
 				updateJsonData();
@@ -595,7 +595,7 @@ class ChartingState extends MusicBeatState
 			player5DropDown.selectedLabel = _song.player5;
 			blockPressWhileScrolling.push(player5DropDown);
 		
-			var check_isDad2 = new FlxUICheckBox(10, 310, null, null, "Has another Dad", 100);
+			var check_isDad2 = new FlxUICheckBox(10, player5DropDown.y, null, null, "Has another Dad", 100);
 			check_isDad2.checked = _song.isDad2;
 			check_isDad2.callback = function()
 			{
@@ -603,7 +603,7 @@ class ChartingState extends MusicBeatState
 
 			};
 		
-			var check_isBf2 = new FlxUICheckBox(10, 270, null, null, "Has another BF", 100);
+			var check_isBf2 = new FlxUICheckBox(10, player4DropDown.y, null, null, "Has another BF", 100);
 			check_isBf2.checked = _song.isBf2;
 			check_isBf2.callback = function()
 			{
@@ -671,17 +671,17 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(stepperSpeed.x, stepperSpeed.y - 15, 0, 'Song Speed:'));
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
 		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
-		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
-		tab_group_song.add(new FlxText(player4DropDown.x, player4DropDown.y - 15, 0, 'boyfriend2:'));
+		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));	
 		tab_group_song.add(new FlxText(player5DropDown.x, player5DropDown.y - 15, 0, 'Opponent2:'));
+		tab_group_song.add(new FlxText(player4DropDown.x, player4DropDown.y - 15, 0, 'boyfriend2:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 		tab_group_song.add(check_isDad2);
 		tab_group_song.add(check_isBf2);
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(gfVersionDropDown);
 		tab_group_song.add(player1DropDown);		
-		tab_group_song.add(player5DropDown);
-		tab_group_song.add(player4DropDown);
+		tab_group_song.add(player5DropDown);				
+		tab_group_song.add(player4DropDown);			
 		tab_group_song.add(stageDropDown);
 
 		UI_box.addGroup(tab_group_song);
@@ -714,17 +714,17 @@ class ChartingState extends MusicBeatState
 		check_gfSection.name = 'check_gf';
 		check_gfSection.checked = _song.notes[curSec].gfSection;
 
-		check_dad2Section = new FlxUICheckBox(10, check_gfSection.y + 22, null, null, "Dad2 section", 100);
+		check_dad2Section = new FlxUICheckBox(check_gfSection.x + 120, check_gfSection.y, null, null, "Dad2 section", 100);
 		check_dad2Section.name = 'check_dad2';
 		check_dad2Section.checked = _song.notes[curSec].dad2Section;
 
-		check_bf2Section = new FlxUICheckBox(10, check_dad2Section.y + 22, null, null, "BF2 section", 100);
+		check_bf2Section = new FlxUICheckBox(check_gfSection.x + 120, check_dad2Section.y + 22, null, null, "BF2 section", 100);
 		check_bf2Section.name = 'check_bf2';
 		check_bf2Section.checked = _song.notes[curSec].bf2Section;
 
 		// _song.needsVoices = check_mustHit.checked;
 
-		check_altAnim = new FlxUICheckBox(check_bf2Section.x + 120, check_bf2Section.y, null, null, "Alt Animation", 100);
+		check_altAnim = new FlxUICheckBox(check_mustHitSection.x + 120, check_mustHitSection.y, null, null, "Alt Animation", 100);
 		check_altAnim.checked = _song.notes[curSec].altAnim;
 
 		stepperBeats = new FlxUINumericStepper(10, 100, 1, 4, 1, 7, 2);
@@ -2692,6 +2692,7 @@ class ChartingState extends MusicBeatState
 		check_mustHitSection.checked = sec.mustHitSection;
 		check_bf2Section.checked = sec.bf2Section;
 		check_gfSection.checked = sec.gfSection;
+		check_dad2Section.checked = sec.dad2Section;
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
@@ -2723,14 +2724,14 @@ class ChartingState extends MusicBeatState
 			leftIcon.changeIcon(characterData.iconP1);
 			rightIcon.changeIcon(characterData.iconP2);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
-			if (_song.notes[curSec].bf2Section) leftIcon.changeIcon('BF-Pixel');
+			if (_song.notes[curSec].bf2Section) leftIcon.changeIcon('bf2');
 		}
 		else
 		{
 			leftIcon.changeIcon(characterData.iconP2);
 			rightIcon.changeIcon(characterData.iconP1);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
-			if (_song.notes[curSec].dad2Section) leftIcon.changeIcon('dad');
+			if (_song.notes[curSec].dad2Section) leftIcon.changeIcon('dad2');
 		}
 	}
 
