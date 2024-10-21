@@ -112,7 +112,9 @@ class PlayState extends MusicBeatState
 	//event variables
 	public var isCameraOnForcedPos:Bool = false;
 
+	public var boyfriend2Map:Map<String, Character> = new Map<String, Character>();
 	public var boyfriendMap:Map<String, Character> = new Map<String, Character>();
+	public var dad2Map:Map<String, Character> = new Map<String, Character>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
@@ -642,6 +644,7 @@ class PlayState extends MusicBeatState
 				boyfriend2 = new Character(0, 0, SONG.player4, true);
 				startCharacterPos(boyfriend2);
 				boyfriend2Group.add(boyfriend2);
+				startCharacterScripts(boyfriend2.curCharacter);
 			}
 
 		boyfriend = new Character(0, 0, SONG.player1, true);
@@ -1197,6 +1200,25 @@ class PlayState extends MusicBeatState
 					newGf.alpha = 0.00001;
 					startCharacterScripts(newGf.curCharacter);
 				}
+			case 3:
+				if(!boyfriend2Map.exists(newCharacter)) {
+					var newBoyfriend2:Character = new Character(0, 0, newCharacter, true);
+					boyfriend2Map.set(newCharacter, newBoyfriend2);
+					boyfriend2Group.add(newBoyfriend2);
+					startCharacterPos(newBoyfriend2);
+					newBoyfriend2.alpha = 0.00001;
+					startCharacterScripts(newBoyfriend2.curCharacter);
+				}
+			case 4:
+				if(!dad2Map.exists(newCharacter)) {
+					var newDad2:Character = new Character(0, 0, newCharacter);
+					dad2Map.set(newCharacter, newDad2);
+					dad2Group.add(newDad2);
+					startCharacterPos(newDad2, true);
+					newDad2.alpha = 0.00001;
+					startCharacterScripts(newDad2.curCharacter);
+				}
+	
 		}
 	}
 
@@ -2075,6 +2097,10 @@ class PlayState extends MusicBeatState
 			case "Change Character":
 				var charType:Int = 0;
 				switch(event.value1.toLowerCase()) {
+					case 'bf2' | 'boyfriend2' | '3':
+						charType = 3;
+					case 'dad2' | 'opponent2' | '4':
+						charType = 4;
 					case 'gf' | 'girlfriend' | '1':
 						charType = 2;
 					case 'dad' | 'opponent' | '0':
@@ -2887,6 +2913,10 @@ class PlayState extends MusicBeatState
 			case 'Change Character':
 				var charType:Int = 0;
 				switch(value1.toLowerCase().trim()) {
+					case 'dad2' | 'opponent2':
+						charType = 4;
+					case 'bf2' | 'boyfriend2':
+						charType = 3;
 					case 'gf' | 'girlfriend':
 						charType = 2;
 					case 'dad' | 'opponent':
@@ -2894,8 +2924,6 @@ class PlayState extends MusicBeatState
 					default:
 						charType = Std.parseInt(value1);
 						if(Math.isNaN(charType)) charType = 0;
-
-
 				}
 
 				switch(charType) {
@@ -2951,6 +2979,30 @@ class PlayState extends MusicBeatState
 							}
 							setOnScripts('gfName', gf.curCharacter);
 						}
+
+					case 3:
+						if(boyfriend2.curCharacter != value2) {
+							if(!boyfriend2Map.exists(value2)) {
+								addCharacterToList(value2, charType);
+							}
+	
+							var lastAlpha:Float = boyfriend2.alpha;
+							boyfriend2.alpha = 0.00001;
+							boyfriend2 = boyfriend2Map.get(value2);
+							boyfriend2.alpha = lastAlpha;
+						}	
+						setOnScripts('boyfriend2Name', boyfriend2.curCharacter);
+					case 4:
+						if(dad2.curCharacter != value2) {
+							if(!dad2Map.exists(value2)) {
+								addCharacterToList(value2, charType);
+							}
+	
+							var lastAlpha:Float = dad2.alpha;
+							dad2.alpha = 0.00001;
+							dad2 = dad2Map.get(value2);
+							dad2.alpha = lastAlpha;
+						}	
 				}					
 
 				reloadHealthBarColors();
@@ -3224,6 +3276,7 @@ class PlayState extends MusicBeatState
 						statix.destroy();
 					});
 			case 'Majin count':
+				playerDance();
 				switch (Std.parseFloat(value1))
 				{
 					case 1:
