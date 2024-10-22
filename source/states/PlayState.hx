@@ -1980,11 +1980,11 @@ class PlayState extends MusicBeatState
 			{
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
-				var gottaHitNote:Bool = section.mustHitSection || section.bf2Section;
+				var gottaHitNote:Bool = section.mustHitSection;
 
 				if (songNotes[1] > 3)
 				{
-					gottaHitNote = !section.mustHitSection || section.bf2Section;
+					gottaHitNote = !section.mustHitSection;
 				}
 
 				var oldNote:Note;
@@ -2841,11 +2841,17 @@ class PlayState extends MusicBeatState
 						char = boyfriend;
 					case 'gf' | 'girlfriend':
 						char = gf;
+					case 'bf1' | 'boyfriend2':
+						char = boyfriend2;
+					case 'dad2' | 'dad2':
+						char = dad2;
 					default:
 						if(flValue2 == null) flValue2 = 0;
 						switch(Math.round(flValue2)) {
 							case 1: char = boyfriend;
 							case 2: char = gf;
+							case 3: char = boyfriend2;
+							case 4: char = dad2;
 						}
 				}
 
@@ -2876,6 +2882,10 @@ class PlayState extends MusicBeatState
 						char = gf;
 					case 'boyfriend' | 'bf':
 						char = boyfriend;
+					case 'bf2' | 'boyfriend2':
+						char = boyfriend2;
+					case 'dad2' | 'dad2':
+						char = dad2;
 					default:
 						var val:Int = Std.parseInt(value1);
 						if(Math.isNaN(val)) val = 0;
@@ -2883,6 +2893,8 @@ class PlayState extends MusicBeatState
 						switch(val) {
 							case 1: char = boyfriend;
 							case 2: char = gf;
+							case 3: char = boyfriend2;
+							case 4: char = dad2;
 						}
 				}
 
@@ -4250,18 +4262,18 @@ class PlayState extends MusicBeatState
 			}
 
 			if(note.dad2Note)
-				{
-					char = dad2;
-					animCheck = 'hey';
-					char.recalculateDanceIdle();
-				}
+			{
+				char = dad2;
+				animCheck = 'hey';
+				char.recalculateDanceIdle();
+			}
 
 			if(note.bf2Note)
-				{
-					char = boyfriend2;
-					animCheck = 'hey';
-					char.recalculateDanceIdle();
-				}
+			{
+				char = boyfriend2;
+				animCheck = 'hey';
+				char.recalculateDanceIdle();
+			}
 
 			if(char != null)
 			{
@@ -4467,6 +4479,8 @@ class PlayState extends MusicBeatState
 			setOnScripts('mustHitSection', SONG.notes[curSection].mustHitSection);
 			setOnScripts('altAnim', SONG.notes[curSection].altAnim);
 			setOnScripts('gfSection', SONG.notes[curSection].gfSection);
+			setOnScripts('bf2Section', SONG.notes[curSection].bf2Section);
+			setOnScripts('dad2Section', SONG.notes[curSection].dad2Section);
 		}
 		super.sectionHit();
 
