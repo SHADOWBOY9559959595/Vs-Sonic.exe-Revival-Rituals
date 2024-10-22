@@ -35,6 +35,8 @@ class TitleStateBKUP extends MusicBeatState
 	var logo:FlxSprite;
 	var titleEnter:FlxSprite;
 
+	var enterPressed:Bool = false;
+
 	override public function create():Void
 		{
 			Paths.clearStoredMemory();
@@ -68,10 +70,9 @@ class TitleStateBKUP extends MusicBeatState
 			sidebar2.scrollFactor.set();
 
 			logo = new FlxSprite().loadGraphic(Paths.image('TitleState/logo'));
-			logo.scale.set(0.55, 0.55);
-			logo.screenCenter(X);
-			logo.screenCenter(Y);
-			logo.y += 20;
+			logo.scale.set(0.5, 0.5);
+			logo.screenCenter(XY);
+			logo.y -= 20;
 
 			titleEnter = new FlxSprite().setFrames(Paths.getSparrowAtlas('TitleState/titleEnter'));
 			titleEnter.screenCenter(X);
@@ -82,14 +83,24 @@ class TitleStateBKUP extends MusicBeatState
 
 			FlxG.sound.play(Paths.sound('TitleLaugh'));
 
-			new FlxTimer().start(1.5, function(tmr:FlxTimer)
+			new FlxTimer().start(1.55, function(tmr:FlxTimer)
                 {
 					FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, 1.5);
 					
 					FlxG.sound.play(Paths.sound('IntroRING'));
-					new FlxTimer().start(0.2, function(tmr:FlxTimer)
+					new FlxTimer().start(0.4, function(tmr:FlxTimer)
 						{
 							FlxG.sound.playMusic(Paths.music('freakyMenu'));
+							
+							// Initially set volume to 0
+							FlxG.sound.music.volume = 0;
+							
+							// Tween the volume from 0 to 1 over 0.4 seconds
+							FlxTween.num(0, 1, 0.4, function(volume:Float)
+							{
+								FlxG.sound.music.volume = volume;
+							});
+						
 						});
 
 					add(bg);			
@@ -118,26 +129,28 @@ class TitleStateBKUP extends MusicBeatState
 			sidebar2.y = sidebar1.y - sidebar2.height;
 			}
 
-			if (FlxG.keys.justPressed.ENTER)
+			if (FlxG.keys.justPressed.ENTER && !enterPressed)
 				{
+					enterPressed = true;  // Set the flag to true to prevent further presses
+		
 					FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, 1);
-
+		
 					titleEnter.animation.play('pressed', true);
 					FlxG.sound.play(Paths.sound('menumomentclick'), 0.7);
-
+		
 					FlxTween.tween(bg, {alpha: 0}, 2.5, {ease: FlxEase.quartInOut});
 					FlxTween.tween(titleEnter, {alpha: 0}, 2, {ease: FlxEase.quartInOut});
 					FlxG.sound.play(Paths.sound('menulaugh'), 0.7);
-
+		
 					new FlxTimer().start(2, function(tmr:FlxTimer)
-						{
-							FlxTween.tween(logo, {alpha: 0}, 1.5, {ease: FlxEase.quartInOut});
-						});	
-
+					{
+						FlxTween.tween(logo, {alpha: 0}, 1.5, {ease: FlxEase.quartInOut});
+					});    
+		
 					new FlxTimer().start(3.5, function(tmr:FlxTimer)
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						});
+					{
+						MusicBeatState.switchState(new MainMenuState());
+					});
 				}
 		}
 		

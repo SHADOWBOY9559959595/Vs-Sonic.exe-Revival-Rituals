@@ -66,6 +66,8 @@ class Note extends FlxSprite
 
 	public var animSuffix:String = '';
 	public var gfNote:Bool = false;
+	public var dad2Note:Bool = false;
+	public var bf2Note:Bool = false;
 	public var earlyHitMult:Float = 1;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
@@ -160,6 +162,10 @@ class Note extends FlxSprite
 					noMissAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case 'Dad2 Sing':
+					dad2Note = true;
+				case 'BF2 Sing':
+					bf2Note = true;
 				case 'Static Note':
 					reloadNote('Notes/STATICNOTE_assets');
 	
