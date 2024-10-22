@@ -74,6 +74,8 @@ import flixel.FlxState;
 import openfl.Lib;
 import objects.FatalPopup;
 
+//chaos intro shit
+import states.stages.Fleetway;
 
 /**
  * This is where all the Gameplay stuff happens and is managed
@@ -373,8 +375,10 @@ class PlayState extends MusicBeatState
 
 		switch (SONG.song.toLowerCase())
 		{
-			case 'chaos' | 'fatality':
+			case 'fatality':
 				startCallback = startCountdown;
+			case 'chaos':
+				startCallback = chaosIntro;
 			case 'substantial' | 'digitalized':
 				startCallback = xterionIntro;
 			case 'round-a-bout':
@@ -1521,6 +1525,75 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(xtMission, {y: 10}, 0.8, {ease: FlxEase.quadOut}); 
 		FlxTween.tween(xtText, {y: dummymission.y + (dummymission.height - xtText.height * 2 + 13)}, 0.8, {ease: FlxEase.quadOut}); 
 		FlxTween.tween(xtStartButton.scale, {x: 1.7, y: 1.7}, 3, {ease: FlxEase.quadInOut, type: PINGPONG}); 
+	}
+
+	public function chaosIntro () 
+		{
+			var wall = Fleetway.wall;
+			var floor = Fleetway.floor;
+			var bgShit = Fleetway.bgShit;
+			var beamUncharged = Fleetway.beamUncharged;
+			var beamCharged = Fleetway.beamCharged;
+			var emeralds = Fleetway.emeralds;
+			var chamber = Fleetway.chamber;
+			var pebbles = Fleetway.pebbles;   
+			var jhonPork = Fleetway.jhonPork;
+
+			FlxTween.tween(dad, {x: 600, y: 800}, 0.1, {ease: FlxEase.cubeOut});    
+			isCameraOnForcedPos = true;			
+			camFollow.x = 900;
+			camFollow.y = 700;            
+			FlxG.camera.zoom = defaultCamZoom;
+			camHUD.visible = false;
+			dad.visible = false;
+			boyfriend.visible = false;
+
+			new FlxTimer().start(0.5, function(lol:FlxTimer)
+				{
+					new FlxTimer().start(1, function(lol:FlxTimer)
+						{
+							FlxTween.tween(FlxG.camera, {zoom: 1.3}, 2, {ease: FlxEase.cubeOut});
+							FlxG.sound.play(Paths.sound('Fleetway/robot'));
+							FlxG.camera.flash(FlxColor.RED, 0.2);
+						});
+						new FlxTimer().start(2, function(lol:FlxTimer)
+						{
+							FlxG.sound.play(Paths.sound('Fleetway/sonic'));
+							chamber.animation.play('woah');
+						});
+
+					new FlxTimer().start(6, function(lol:FlxTimer)
+					{
+						startCountdown();                                
+						dad.visible = true;
+						FlxG.sound.play(Paths.sound('Fleetway/beam'));
+						camFollow.y -= 500;      
+						FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.2, {ease: FlxEase.cubeOut});
+						FlxG.camera.shake(0.02, 0.2);
+						FlxG.camera.flash(FlxColor.WHITE, 0.2);
+						wall.animation.play('nogud');
+						floor.animation.play('yellow');
+						bgShit.animation.play('yellow');
+						pebbles.animation.play('yellow');
+						beamUncharged.visible = false;
+						beamCharged.visible = true;
+
+						new FlxTimer().start(0.7, function(lol:FlxTimer)
+							{
+								FlxTween.tween(dad, {x: 600, y: -400}, 0.8, {ease: FlxEase.cubeOut});
+								
+								new FlxTimer().start(0.6, function(lol:FlxTimer)
+									{
+										isCameraOnForcedPos = false;			
+									});
+							});
+						new FlxTimer().start(4.9, function(lol:FlxTimer)
+							{
+								camHUD.visible = true;
+								boyfriend.visible = true;
+							});
+					});
+				});
 	}
 
 	public function needleIntro () {
@@ -2843,7 +2916,7 @@ class PlayState extends MusicBeatState
 						char = gf;
 					case 'bf1' | 'boyfriend2':
 						char = boyfriend2;
-					case 'dad2' | 'dad2':
+					case 'dad2':
 						char = dad2;
 					default:
 						if(flValue2 == null) flValue2 = 0;
@@ -2884,7 +2957,7 @@ class PlayState extends MusicBeatState
 						char = boyfriend;
 					case 'bf2' | 'boyfriend2':
 						char = boyfriend2;
-					case 'dad2' | 'dad2':
+					case 'dad2':
 						char = dad2;
 					default:
 						var val:Int = Std.parseInt(value1);

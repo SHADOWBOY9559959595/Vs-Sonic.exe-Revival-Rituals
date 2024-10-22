@@ -5,21 +5,21 @@ import states.stages.objects.*;
 class Fleetway extends BaseStage
 {
     //Inner Moving sprites
-    var wall:FlxSprite;
+    public static var wall:FlxSprite;
 
     //Outer Static sprites
-    var floor:FlxSprite;
-    var bgShit:FlxSprite;
-    var beamUncharged:FlxSprite;
-    var beamCharged:FlxSprite;
-    var emeralds:FlxSprite;
-    var chamber:FlxSprite;
+    public static var floor:FlxSprite;
+    public static var bgShit:FlxSprite;
+    public static var beamUncharged:FlxSprite;
+    public static var beamCharged:FlxSprite;
+    public static var emeralds:FlxSprite;
+    public static var chamber:FlxSprite;
 
     //characters go here
 
     //Layered Static Sprites
-    var pebbles:FlxSprite;   
-    var jhonPork:FlxSprite;   //its jhon pork, fight me sonic.exe team
+    public static var pebbles:FlxSprite;   
+    public static var jhonPork:FlxSprite;   //its jhon pork, fight me sonic.exe team
 
 	override function create()
 	{
@@ -72,12 +72,6 @@ class Fleetway extends BaseStage
         add(beamCharged);
         add(emeralds);
 
-
-        switch (songName)
-        {
-            case 'chaos':
-                setStartCallback(chaosIntro);
-        }
 	}
     override function createPost()
     {
@@ -102,62 +96,5 @@ class Fleetway extends BaseStage
         add(pebbles);
         add(jhonPork);      
 
-    }
-    
-	function chaosIntro()
-        {
-            FlxTween.tween(dad, {x: 600, y: 800}, 0.1, {ease: FlxEase.cubeOut});    
-            camFollow.x = -225.05;
-            camFollow.y = 463.9;            
-            FlxG.camera.zoom = defaultCamZoom;
-            camHUD.visible = false;
-            dad.visible = false;
-            boyfriend.visible = false;
-
-            new FlxTimer().start(0.5, function(lol:FlxTimer)
-                {
-                    new FlxTimer().start(1, function(lol:FlxTimer)
-                        {
-
-                            FlxTween.tween(FlxG.camera, {zoom: 1.3}, 2, {ease: FlxEase.cubeOut});
-                            FlxG.sound.play(Paths.sound('Fleetway/robot'));
-                            FlxG.camera.flash(FlxColor.RED, 0.2);
-                        });
-                        new FlxTimer().start(2, function(lol:FlxTimer)
-                        {
-                            FlxG.sound.play(Paths.sound('Fleetway/sonic'));
-                            chamber.animation.play('woah');
-                            
-                        });
-
-                    new FlxTimer().start(6, function(lol:FlxTimer)
-                    {
-                        startCountdown();                                
-                        dad.visible = true;
-                        FlxG.sound.play(Paths.sound('Fleetway/beam'));
-                        camFollow.y -= 500;      
-                        FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.2, {ease: FlxEase.cubeOut});
-                        FlxG.camera.shake(0.02, 0.2);
-                        FlxG.camera.flash(FlxColor.WHITE, 0.2);
-                        wall.animation.play('nogud');
-                        floor.animation.play('yellow');
-                        bgShit.animation.play('yellow');
-                        pebbles.animation.play('yellow');
-                        beamUncharged.visible = false;
-                        beamCharged.visible = true;
-
-                        new FlxTimer().start(0.7, function(lol:FlxTimer)
-                            {
-                                FlxTween.tween(dad, {x: 600, y: -400}, 0.8, {ease: FlxEase.cubeOut});
-                            });
-
-                        
-                        new FlxTimer().start(4.9, function(lol:FlxTimer)
-                            {
-                                camHUD.visible = true;
-                                boyfriend.visible = true;
-                            });
-                    });
-                });
     }
 }
