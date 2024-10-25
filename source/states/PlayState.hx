@@ -760,35 +760,35 @@ class PlayState extends MusicBeatState
 		updateScore(false);
 		uiGroup.add(scoreTxt);
 
-		if(SONG.isDad2)
-			{		
-				iconP4 = new HealthIcon(dad2.healthIcon, false);
-				iconP4.y = healthBar.y - 75;
-				iconP4.visible = !ClientPrefs.data.hideHud;
-				iconP4.alpha = ClientPrefs.data.healthBarAlpha;
-				uiGroup.add(iconP4);
-			}
-
-		if(SONG.isBf2)
-			{		
-				iconP3 = new HealthIcon(boyfriend2.healthIcon, true);
-				iconP3.y = healthBar.y - 75;
-				iconP3.visible = !ClientPrefs.data.hideHud;
-				iconP3.alpha = ClientPrefs.data.healthBarAlpha;
-				uiGroup.add(iconP3);
-			}
-
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.data.hideHud;
 		iconP2.alpha = ClientPrefs.data.healthBarAlpha;
 		uiGroup.add(iconP2);
 
+		if(SONG.isDad2)
+			{		
+				iconP4 = new HealthIcon(dad2.healthIcon, false);
+				iconP4.y = healthBar.y - 95;
+				iconP4.visible = !ClientPrefs.data.hideHud;
+				iconP4.alpha = ClientPrefs.data.healthBarAlpha;
+				uiGroup.add(iconP4);
+			}
+
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.data.hideHud;
 		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
 		uiGroup.add(iconP1);
+
+		if(SONG.isBf2)
+			{		
+				iconP3 = new HealthIcon(boyfriend2.healthIcon, true);
+				iconP3.y = healthBar.y - 95;
+				iconP3.visible = !ClientPrefs.data.hideHud;
+				iconP3.alpha = ClientPrefs.data.healthBarAlpha;
+				uiGroup.add(iconP3);
+			}
 
 		botplayTxt = new FlxText(400, timeBar.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -2763,9 +2763,9 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		if(SONG.isBf2)
-			iconP3.x = healthBar.barCenter + (150 * iconP3.scale.x - 150) / 2 - iconOffset + 20;
+			iconP3.x = healthBar.barCenter + (150 * iconP3.scale.x - 150) / 2 - iconOffset + 70;
 		if(SONG.isDad2)
-			iconP4.x = healthBar.barCenter - (150 * iconP4.scale.x) / 2 - iconOffset * 2 -20;
+			iconP4.x = healthBar.barCenter - (150 * iconP4.scale.x) / 2 - iconOffset * 2 - 70;
 	}
 
 	var iconsAnimations:Bool = true;

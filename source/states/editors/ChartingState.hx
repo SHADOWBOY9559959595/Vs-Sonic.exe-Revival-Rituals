@@ -2730,9 +2730,10 @@ class ChartingState extends MusicBeatState
 		}
 		else if (_song.notes[curSec].bf2Section)
 			{
-				leftIcon.changeIcon(characterData.iconP3);
-				rightIcon.changeIcon(characterData.iconP2);
+				leftIcon.changeIcon(characterData.iconP2);
+				rightIcon.changeIcon(characterData.iconP3);
 				if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+				if (_song.notes[curSec].dad2Section) leftIcon.changeIcon(characterData.iconP4);
 			}
 		else if (_song.notes[curSec].dad2Section)
 			{
