@@ -2703,6 +2703,8 @@ class ChartingState extends MusicBeatState
 	var characterData:Dynamic = {
 		iconP1: null,
 		iconP2: null,
+		iconP3: null,
+		iconP4: null,
 		vocalsP1: null,
 		vocalsP2: null
 	};
@@ -2724,14 +2726,26 @@ class ChartingState extends MusicBeatState
 			leftIcon.changeIcon(characterData.iconP1);
 			rightIcon.changeIcon(characterData.iconP2);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
-			if (_song.notes[curSec].bf2Section) leftIcon.changeIcon('bf2');
+			if (_song.notes[curSec].bf2Section) leftIcon.changeIcon(characterData.iconP3);
 		}
+		else if (_song.notes[curSec].bf2Section)
+			{
+				leftIcon.changeIcon(characterData.iconP3);
+				rightIcon.changeIcon(characterData.iconP2);
+				if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+			}
+		else if (_song.notes[curSec].dad2Section)
+			{
+				leftIcon.changeIcon(characterData.iconP4);
+				rightIcon.changeIcon(characterData.iconP1);
+				if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+			}
 		else
 		{
 			leftIcon.changeIcon(characterData.iconP2);
 			rightIcon.changeIcon(characterData.iconP1);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
-			if (_song.notes[curSec].dad2Section) leftIcon.changeIcon('dad2');
+			if (_song.notes[curSec].dad2Section) leftIcon.changeIcon(characterData.iconP4);
 		}
 	}
 

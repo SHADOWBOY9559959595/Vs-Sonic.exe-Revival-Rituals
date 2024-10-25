@@ -232,6 +232,8 @@ class PlayState extends MusicBeatState
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+	public var iconP3:HealthIcon;
+	public var iconP4:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
@@ -758,17 +760,35 @@ class PlayState extends MusicBeatState
 		updateScore(false);
 		uiGroup.add(scoreTxt);
 
-		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.y = healthBar.y - 75;
-		iconP1.visible = !ClientPrefs.data.hideHud;
-		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
-		uiGroup.add(iconP1);
+		if(SONG.isDad2)
+			{		
+				iconP4 = new HealthIcon(dad2.healthIcon, false);
+				iconP4.y = healthBar.y - 75;
+				iconP4.visible = !ClientPrefs.data.hideHud;
+				iconP4.alpha = ClientPrefs.data.healthBarAlpha;
+				uiGroup.add(iconP4);
+			}
+
+		if(SONG.isBf2)
+			{		
+				iconP3 = new HealthIcon(boyfriend2.healthIcon, true);
+				iconP3.y = healthBar.y - 75;
+				iconP3.visible = !ClientPrefs.data.hideHud;
+				iconP3.alpha = ClientPrefs.data.healthBarAlpha;
+				uiGroup.add(iconP3);
+			}
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.data.hideHud;
 		iconP2.alpha = ClientPrefs.data.healthBarAlpha;
 		uiGroup.add(iconP2);
+
+		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.y = healthBar.y - 75;
+		iconP1.visible = !ClientPrefs.data.hideHud;
+		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
+		uiGroup.add(iconP1);
 
 		botplayTxt = new FlxText(400, timeBar.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -992,6 +1012,10 @@ class PlayState extends MusicBeatState
 
 			iconP1.visible = false;
 			iconP2.visible = false;
+			if(SONG.isBf2)
+				iconP3.visible = false;
+			if(SONG.isDad2)
+				iconP4.visible = false;
 			healthBar.visible = false;
 		}
 
@@ -1692,6 +1716,10 @@ class PlayState extends MusicBeatState
 				healthBar.x += 150;
 				iconP1.x += 150;
 				iconP2.x += 150;
+				if(SONG.isBf2)
+					iconP2.x += 150;
+				if(SONG.isDad2)
+					iconP4.x += 150;
 			}
 		
 
@@ -2713,6 +2741,20 @@ class PlayState extends MusicBeatState
 		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, Math.exp(-elapsed * 9 * playbackRate));
 		iconP2.scale.set(mult, mult);
 		iconP2.updateHitbox();
+
+		if(SONG.isBf2)
+			{		
+				var mult:Float = FlxMath.lerp(1, iconP3.scale.x, Math.exp(-elapsed * 9 * playbackRate));
+				iconP3.scale.set(mult, mult);
+				iconP3.updateHitbox();
+			}
+
+		if(SONG.isDad2)
+			{		
+				var mult:Float = FlxMath.lerp(1, iconP4.scale.x, Math.exp(-elapsed * 9 * playbackRate));
+				iconP4.scale.set(mult, mult);
+				iconP4.updateHitbox();
+			}
 	}
 
 	public dynamic function updateIconsPosition()
@@ -2720,6 +2762,10 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 		iconP1.x = healthBar.barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		if(SONG.isBf2)
+			iconP3.x = healthBar.barCenter + (150 * iconP3.scale.x - 150) / 2 - iconOffset + 20;
+		if(SONG.isDad2)
+			iconP4.x = healthBar.barCenter - (150 * iconP4.scale.x) / 2 - iconOffset * 2 -20;
 	}
 
 	var iconsAnimations:Bool = true;
@@ -2738,6 +2784,10 @@ class PlayState extends MusicBeatState
 
 		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
 		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		if(SONG.isBf2)
+			iconP3.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		if(SONG.isDad2)
+			iconP4.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
 		return health;
 	}
 
@@ -3075,6 +3125,7 @@ class PlayState extends MusicBeatState
 							boyfriend2.alpha = 0.00001;
 							boyfriend2 = boyfriend2Map.get(value2);
 							boyfriend2.alpha = lastAlpha;
+							iconP3.changeIcon(boyfriend2.healthIcon);
 						}	
 						setOnScripts('boyfriend2Name', boyfriend2.curCharacter);
 					case 4:
@@ -3087,6 +3138,7 @@ class PlayState extends MusicBeatState
 							dad2.alpha = 0.00001;
 							dad2 = dad2Map.get(value2);
 							dad2.alpha = lastAlpha;
+							iconP4.changeIcon(dad2.healthIcon);
 						}	
 				}					
 
@@ -3188,12 +3240,21 @@ class PlayState extends MusicBeatState
 						note.loadPixelNoteAnims();
 					}
 			
+
+					healthBar.x += 150;
+					iconP1.x += 150;
+					iconP2.x += 150;
+					if(SONG.isBf2)
+						iconP3.x += 150;
+					if(SONG.isDad2)
+						iconP4.x += 150;
 					updateIconsPosition();
 					iconP1.updateHitbox();
 					iconP2.updateHitbox();
-					iconP1.x += 150;
-					iconP2.x += 150;
-					healthBar.x += 150;
+					if(SONG.isBf2)
+						iconP3.updateHitbox();
+					if(SONG.isDad2)
+						iconP4.updateHitbox();
 					reloadHealthBarColors();
 			
 					sonicHUD.visible = true;
@@ -3221,9 +3282,17 @@ class PlayState extends MusicBeatState
 					healthBar.x -= 137;
 					iconP1.x -= 137;
 					iconP2.x -= 137;
+					if(SONG.isBf2)
+						iconP3.x += 137;
+					if(SONG.isDad2)
+						iconP4.x += 137;
 					updateIconsPosition();
 					iconP1.updateHitbox();
 					iconP2.updateHitbox();
+					if(SONG.isBf2)
+						iconP3.updateHitbox();
+					if(SONG.isDad2)
+						iconP4.updateHitbox();
 					reloadHealthBarColors();
 			
 					sonicHUD.visible = false;
@@ -4480,8 +4549,18 @@ class PlayState extends MusicBeatState
 		iconP1.scale.set(1.2, 1.2);
 		iconP2.scale.set(1.2, 1.2);
 
+		if(SONG.isBf2)
+			iconP3.scale.set(1.2, 1.2);
+		if(SONG.isDad2)
+			iconP4.scale.set(1.2, 1.2);
+
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+
+		if(SONG.isBf2)
+			iconP3.updateHitbox();
+		if(SONG.isDad2)
+			iconP4.updateHitbox();
 
 		characterBopper(curBeat);
 
