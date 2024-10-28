@@ -95,7 +95,6 @@ class ChartingState extends MusicBeatState
 		['Green Hill', "Exclusive to YCR Stage\nValue 1: if set to GH, it'll turn everything into GH stage\n if set to noGH it'll turn everithing into normal YCR stage."],
 		['Pickel', "Lol pickel reference\nValue 1:\nye sets sonicHUD on\nno sets normal ui "],
 		['Countdown', "Funny countdown (liv blenk)."],
-		['Song End', "Funny Song ending\nvalue 1: tweening in bars speed."],
 		['Change Noteskin', "Funny Song change noteskin\nvalue 1: new noteskin name.\nNEEDS TO BE IN NOTESKINS\n AND HAVE 'NOTE_assets-name'\nif youre not stupid, name needs to be your noteskin"],
 		['Majin count', "Majin fucking says fuck what a fuckitty fuck o my fucking god fuck shit cock and balls fucking my fucking cock is fucking my fucking i dont fucking now oh my fucking god"],
 		['Fleet Attack', "FLEET FUCKING ATTACKS OH MY GOD"],
