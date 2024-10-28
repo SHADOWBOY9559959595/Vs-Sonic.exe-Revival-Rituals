@@ -1677,20 +1677,20 @@ class PlayState extends MusicBeatState
 		sunk.screenCenter(XY);
 		sunk.cameras = [camOther];
 		add(sunk);
-		sunk.x += 200;
+		sunk.x -= 120;
 		sunk.y -= 2000;
-		FlxTween.tween(sunk, {y: 0}, 0.3, {ease: FlxEase.quadOut});
-		FlxG.sound.play(Paths.sound('Sunk/flatBONK'));
+
 
 		new FlxTimer().start(0.5, function(tmr:FlxTimer) {
-			startCountdown();
+			FlxTween.tween(sunk, {y: 0}, 0.3, {ease: FlxEase.quadOut});
+			FlxG.sound.play(Paths.sound('Sunk/flatBONK'));		
 		});
 
-		new FlxTimer().start(1, function(tmr:FlxTimer) {
+		new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 			FlxTween.tween(blackbg, {alpha: 0}, 0.5);
 			FlxTween.tween(sunk, {alpha: 0}, 0.5);
 			FlxTween.tween(camHUD, {alpha: 1}, 0.5);
-
+			startCountdown();
 			new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 				camHUD.alpha = 1;
 			});
