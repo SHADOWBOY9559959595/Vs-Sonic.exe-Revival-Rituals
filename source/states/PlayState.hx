@@ -365,6 +365,10 @@ class PlayState extends MusicBeatState
 	var xtText:FlxText;
 	var xtStartButton:FlxSprite;
 
+	//Sunky timebar shi
+	public var sunkerTimebarFuckery:Bool = false;
+	public var sunkerTimebarNumber:Int;	
+
 	override public function create()
 	{
 		FlxG.autoPause = false;
@@ -381,6 +385,9 @@ class PlayState extends MusicBeatState
 				startCallback = startCountdown;
 			case 'chaos':
 				startCallback = chaosIntro;
+			case 'milk':
+				startCallback = sunkIntro;
+				sunkerTimebarFuckery = true;
 			case 'substantial' | 'digitalized':
 				startCallback = xterionIntro;
 			case 'round-a-bout':
@@ -692,7 +699,10 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.data.timeBarType == 'Song Name') timeTxt.text = SONG.song;
 
 		timeBar = new Bar(0, timeTxt.y + (timeTxt.height / 4) - 50, 'timeBar', function() return songPercent, 0, 1);
-		timeBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+
+		if(!sunkerTimebarFuckery)
+			timeBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+
 		timeBar.scrollFactor.set();
 		timeBar.screenCenter(X);
 		timeBar.alpha = 0;
@@ -1454,11 +1464,10 @@ class PlayState extends MusicBeatState
 	
 		camHUD.alpha = 0;
 	
-		blackbg = new FlxSprite(0, 0).makeGraphic(1280, 720, FlxColor.BLACK);
+		blackbg = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		blackbg.scrollFactor.set(); 
 		blackbg.alpha = 1;
-		blackbg.screenCenter(X);
-		blackbg.screenCenter(Y);
+		blackbg.screenCenter(XY);
 		blackbg.cameras = [camOther];
 		add(blackbg);
 		blackbg.updateHitbox();
@@ -1503,11 +1512,10 @@ class PlayState extends MusicBeatState
 	
 		sjamMusic = FlxG.sound.play(Paths.music('sjamMusic'), true); 
 	
-		xtBlackbg = new FlxSprite(0, 0).makeGraphic(1280, 720, FlxColor.BLACK); 
+		xtBlackbg = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK); 
 		xtBlackbg.scrollFactor.set(); 
 		xtBlackbg.alpha = 1; 
-		xtBlackbg.screenCenter(X); 
-		xtBlackbg.screenCenter(Y); 
+		xtBlackbg.screenCenter(XY); 
 		xtBlackbg.cameras = [camOther]; 
 		add(xtBlackbg); 
 		xtBlackbg.updateHitbox(); 
@@ -1634,7 +1642,7 @@ class PlayState extends MusicBeatState
 		needleBad.cameras = [camOther]; 
 		add(needleBad); 
 
-		blackbg = new FlxSprite(0, 0).makeGraphic(1280, 720, FlxColor.BLACK);
+		blackbg = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		blackbg.scrollFactor.set(); 
 		blackbg.alpha = 1;
 		blackbg.screenCenter(XY);	
@@ -1664,6 +1672,46 @@ class PlayState extends MusicBeatState
 			});
 		});
 	}});
+	}
+
+	public function sunkIntro () {
+		var blackbg:FlxSprite;
+		var sunk:FlxSprite;
+	
+		camHUD.alpha = 0;
+	
+		blackbg = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackbg.scrollFactor.set(); 
+		blackbg.alpha = 1;
+		blackbg.screenCenter(XY);
+		blackbg.cameras = [camOther];
+		add(blackbg);
+		blackbg.updateHitbox();
+	
+		sunk = new FlxSprite().loadGraphic(Paths.image('introStuff/Sunky'));
+		sunk.scrollFactor.set();
+		sunk.screenCenter(XY);
+		sunk.cameras = [camOther];
+		add(sunk);
+		sunk.x += 200;
+		sunk.y -= 2000;
+
+
+		new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+			FlxTween.tween(sunk, {y: 0}, 0.3, {ease: FlxEase.quadOut});
+			FlxG.sound.play(Paths.sound('Sunk/flatBONK'));
+
+			new FlxTimer().start(1, function(tmr:FlxTimer) {
+				FlxTween.tween(blackbg, {alpha: 0}, 0.5);
+				FlxTween.tween(sunk, {alpha: 0}, 0.5);
+				FlxTween.tween(camHUD, {alpha: 1}, 0.5);
+				startCountdown();
+
+				new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+					camHUD.alpha = 1;
+				});
+			});
+		});
 	}
 	
 	public function startCountdown()
@@ -2431,7 +2479,8 @@ class PlayState extends MusicBeatState
 		if (isFixedAspectRatio)
 			FlxG.fullscreen = false;
 
-		timeBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+		if(!sunkerTimebarFuckery)
+			timeBar.setColors(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 
 		if(!inCutscene && !paused && !freezeCamera) {
 			FlxG.camera.followLerp = 2.4 * cameraSpeed * playbackRate;
@@ -3373,8 +3422,7 @@ class PlayState extends MusicBeatState
 				VG.alpha = 0.6;
 				VG.scrollFactor.set();
 				VG.camera = camOther;
-				VG.screenCenter(X);
-				VG.screenCenter(Y);
+				VG.screenCenter(XY);
 				add(VG);
 
 				FlxTween.tween(VG, {alpha: 0}, flValue1, {ease: FlxEase.quartInOut});
@@ -3385,8 +3433,7 @@ class PlayState extends MusicBeatState
 				boo.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
 				boo.scrollFactor.set();
 				boo.camera = camOther;
-				boo.screenCenter(X);
-				boo.screenCenter(Y);
+				boo.screenCenter(XY);
 				add(boo);
 				
 				var statix:FlxSprite;
@@ -3395,8 +3442,7 @@ class PlayState extends MusicBeatState
 				statix.animation.play('screenSTATIC');
 				statix.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
 				statix.alpha = 0.3;
-				statix.screenCenter(X);
-				statix.screenCenter(Y);
+				statix.screenCenter(XY);
 				statix.camera = camOther;
 				add(statix);
 				
@@ -3418,8 +3464,7 @@ class PlayState extends MusicBeatState
 				statix.animation.play('screenSTATIC');
 				statix.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
 				statix.alpha = flValue2;
-				statix.screenCenter(X);
-				statix.screenCenter(Y);
+				statix.screenCenter(XY);
 				statix.camera = camOther;
 				add(statix);
 				
@@ -4258,8 +4303,7 @@ class PlayState extends MusicBeatState
 					staticscreen.animation.addByPrefix('statix', "statix", 24);
 					staticscreen.animation.play('statix');
 					staticscreen.scale.set(4.5, 4.5);
-					staticscreen.screenCenter(X);
-					staticscreen.screenCenter(Y);
+					staticscreen.screenCenter(XY);
 					staticscreen.alpha = 1;
 					FlxG.sound.play(Paths.sound('hitStatic1'));
 					add(staticscreen);
@@ -4565,6 +4609,35 @@ class PlayState extends MusicBeatState
 		characterBopper(curBeat);
 
 		super.beatHit();
+
+		if (curBeat % 4 == 0 && sunkerTimebarFuckery)
+			{
+				var prevInt:Int = sunkerTimebarNumber;
+	
+				sunkerTimebarNumber = FlxG.random.int(1, 9, [sunkerTimebarNumber]);
+	
+				switch(sunkerTimebarNumber){
+					case 1:
+						timeBar.setColors(0xFFFF0000);
+					case 2:
+						timeBar.setColors(0xFF1BFF00);
+					case 3:
+						timeBar.setColors(0xFF00C9FF);
+					case 4:
+						timeBar.setColors(0xFFFC00FF);
+					case 5:
+						timeBar.setColors(0xFFFFD100);
+					case 6:
+						timeBar.setColors(0xFF0011FF);
+					case 7:
+						timeBar.setColors(0xFFC9C9C9);
+					case 8:
+						timeBar.setColors(0xFF00FFE3);
+					case 9:
+						timeBar.setColors(0xFF6300FF);
+				}
+			}
+
 		lastBeatHit = curBeat;
 
 		setOnScripts('curBeat', curBeat);
