@@ -77,6 +77,9 @@ import objects.FatalPopup;
 //chaos intro shit
 import states.stages.Fleetway;
 
+//Shaders shit
+import shaders.VCRDistortionShader;
+
 /**
  * This is where all the Gameplay stuff happens and is managed
  *
@@ -368,6 +371,13 @@ class PlayState extends MusicBeatState
 	//Sunky timebar shi
 	public var sunkerTimebarFuckery:Bool = false;
 	public var sunkerTimebarNumber:Int;	
+
+	//Flying shit
+	var flyTarg:Character;
+	var flyState:String = '';
+	var floatyX:Float = 0;
+	var floatyY:Float = 0;
+	var floatyTime:Float = 0;
 
 	override public function create()
 	{
@@ -1127,17 +1137,22 @@ class PlayState extends MusicBeatState
 
 		if(eventNotes.length < 1) checkEventNote();
 
-		//switch (SONG.song.toLowerCase())
-		//{
-			//case 'round-a-bout':
-				//camGame.setFilters([curShader, new DistortBGEffect(0.1, true, true, true)]);
-				//camHUD.setFilters([curShader, new DistortBGEffect(0.1, true, true, true)]);
-				//camOther.setFilters([curShader, new DistortBGEffect(0.1, true, true, true)]);
-			//default:
-				//camGame.setFilters([]);
-				//camHUD.setFilters([]);
-				//camOther.setFilters([]);
-		//}
+		switch (SONG.song.toLowerCase())
+		{
+			case 'round-a-bout':
+				var vcr:VCRDistortionShader;
+				vcr = new VCRDistortionShader();
+				curShader = new ShaderFilter(vcr);
+				camGame.setFilters([curShader]);
+				camHUD.setFilters([curShader]);
+				camOther.setFilters([curShader]);
+			default:
+				camGame.setFilters([]);
+				camHUD.setFilters([]);
+				camOther.setFilters([]);
+		}
+
+		charFloat();
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1258,6 +1273,8 @@ class PlayState extends MusicBeatState
 				}
 	
 		}
+
+		charFloat();
 	}
 
 	function startCharacterScripts(name:String)
@@ -2521,7 +2538,7 @@ class PlayState extends MusicBeatState
 					startCountdown();	
 				});
 			}
-			
+
 		super.update(elapsed);
 
 		setOnScripts('curDecStep', curDecStep);
@@ -2682,10 +2699,10 @@ class PlayState extends MusicBeatState
 				else
 				{
 					playerDance();
+
 					if(SONG.isBf2)
-						{
-							player2Dance();
-						}		
+						player2Dance();
+
 				}
 				if(notes.length > 0)
 				{
@@ -3190,7 +3207,7 @@ class PlayState extends MusicBeatState
 							iconP4.changeIcon(dad2.healthIcon);
 						}	
 				}					
-
+				charFloat();
 				reloadHealthBarColors();
 
 			case 'Change Scroll Speed':
@@ -5296,5 +5313,45 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
+		}
+	public function charFloat()
+		{
+			var curChar:String;
+			if (dad != null && dad.curCharacter != "") {
+				curChar = dad.curCharacter;
+			} else if (boyfriend != null && boyfriend.curCharacter != "") {
+				curChar = boyfriend.curCharacter;
+			} else if (dad2 != null && dad2.curCharacter != "") {
+				curChar = dad2.curCharacter;
+			} else if (boyfriend2 != null && boyfriend2.curCharacter != "") {
+				curChar = boyfriend2.curCharacter;
+			} else if (gf != null && gf.curCharacter != "") {
+				curChar = gf.curCharacter;
+			} else {
+				curChar = ""; // or assign a default value if needed
+			}
+	
+			switch (curChar)
+			{
+				//case 'fleetway':
+					//flyTarg = dad;
+					//floatyY = 10;
+					//floatyTime = 10;
+					//flyState = 'hover';
+			}
+	
+			switch (flyState)
+			{
+				case 'hover' | 'hovering':
+					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 1.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
+				case 'fly' | 'flying':
+					FlxTween.tween(flyTarg, {y: flyTarg.y * floatyY}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
+					FlxTween.tween(flyTarg, {x: flyTarg.x * floatyX}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
+				case 'sHover' | 'sHovering':
+					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 0.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
+			}
+
+			trace("Char " + curChar + " is floating with " + flyState + " state,so theyre floating now ig");
+
 		}
 }
