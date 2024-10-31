@@ -1151,8 +1151,6 @@ class PlayState extends MusicBeatState
 				camHUD.setFilters([]);
 				camOther.setFilters([]);
 		}
-
-		charFloat();
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1273,8 +1271,6 @@ class PlayState extends MusicBeatState
 				}
 	
 		}
-
-		charFloat();
 	}
 
 	function startCharacterScripts(name:String)
@@ -3207,7 +3203,6 @@ class PlayState extends MusicBeatState
 							iconP4.changeIcon(dad2.healthIcon);
 						}	
 				}					
-				charFloat();
 				reloadHealthBarColors();
 
 			case 'Change Scroll Speed':
@@ -5313,45 +5308,5 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
-		}
-	public function charFloat()
-		{
-			var curChar:String;
-			if (dad != null && dad.curCharacter != "") {
-				curChar = dad.curCharacter;
-			} else if (boyfriend != null && boyfriend.curCharacter != "") {
-				curChar = boyfriend.curCharacter;
-			} else if (dad2 != null && dad2.curCharacter != "") {
-				curChar = dad2.curCharacter;
-			} else if (boyfriend2 != null && boyfriend2.curCharacter != "") {
-				curChar = boyfriend2.curCharacter;
-			} else if (gf != null && gf.curCharacter != "") {
-				curChar = gf.curCharacter;
-			} else {
-				curChar = ""; // or assign a default value if needed
-			}
-	
-			switch (curChar)
-			{
-				//case 'fleetway':
-					//flyTarg = dad;
-					//floatyY = 10;
-					//floatyTime = 10;
-					//flyState = 'hover';
-			}
-	
-			switch (flyState)
-			{
-				case 'hover' | 'hovering':
-					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 1.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-				case 'fly' | 'flying':
-					FlxTween.tween(flyTarg, {y: flyTarg.y * floatyY}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-					FlxTween.tween(flyTarg, {x: flyTarg.x * floatyX}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-				case 'sHover' | 'sHovering':
-					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 0.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-			}
-
-			trace("Char " + curChar + " is floating with " + flyState + " state,so theyre floating now ig");
-
 		}
 }
