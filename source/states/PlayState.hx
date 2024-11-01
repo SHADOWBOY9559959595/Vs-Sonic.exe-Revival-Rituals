@@ -655,6 +655,7 @@ class PlayState extends MusicBeatState
 				dad2 = new Character(0, 0, SONG.player5);
 				startCharacterPos(dad2, true);
 				dad2Group.add(dad2);
+				startCharacterScripts(dad2.curCharacter);
 			}
 
 		dad = new Character(0, 0, SONG.player2);
@@ -1152,7 +1153,9 @@ class PlayState extends MusicBeatState
 				camOther.setFilters([]);
 		}
 
-		charFloat();
+		if(songName == 'round-a-bout' && dad2.curCharacter == "Sarah")
+			FlxTween.tween(dad2, { alpha: 0.5 }, 3, { type: FlxTween.PINGPONG });
+
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1273,8 +1276,6 @@ class PlayState extends MusicBeatState
 				}
 	
 		}
-
-		charFloat();
 	}
 
 	function startCharacterScripts(name:String)
@@ -2165,6 +2166,8 @@ class PlayState extends MusicBeatState
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
 				swagNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
+				swagNote.dadsDuetNote = (section.dadsDuetSection && (songNotes[1]<4));
+				swagNote.bfsDuetNote = (section.bfsDuetSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
@@ -2185,6 +2188,8 @@ class PlayState extends MusicBeatState
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
 						sustainNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
+						sustainNote.dadsDuetNote = (section.dadsDuetSection && (songNotes[1]<4));
+						sustainNote.bfsDuetNote = (section.bfsDuetSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
 						sustainNote.parent = swagNote;
@@ -2571,6 +2576,8 @@ class PlayState extends MusicBeatState
 				var isMustHitSection = target.mustHitSection;
 				var bf2Section = target.bf2Section;
 				var dad2Section = target.dad2Section;
+				var dadsDuetSection = target.dadsDuetSection;
+				var bfsDuetSection = target.bfsDuetSection;
 		
 				var character;
 				var offsetX;
@@ -2584,6 +2591,14 @@ class PlayState extends MusicBeatState
 					character = dad2;
 					offsetX = 150;
 					cameraOffset = opponent2CameraOffset;
+				} else if (dadsDuetSection) {
+					character = dad2;
+					offsetX = 150;
+					cameraOffset = opponent2CameraOffset;
+				} else if (bfsDuetSection) {
+					character = boyfriend2;
+					offsetX = 150;
+					cameraOffset = boyfriend2CameraOffset;
 				} else if (isMustHitSection) {
 					character = boyfriend;
 					offsetX = -100;
@@ -3207,7 +3222,6 @@ class PlayState extends MusicBeatState
 							iconP4.changeIcon(dad2.healthIcon);
 						}	
 				}					
-				charFloat();
 				reloadHealthBarColors();
 
 			case 'Change Scroll Speed':
@@ -4345,6 +4359,7 @@ class PlayState extends MusicBeatState
 		if((note != null && note.gfNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].gfSection)) char = gf;
 		if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
 		if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = boyfriend2;
+
 		char.recalculateDanceIdle();
 
 		if(char != null && (note == null || !note.noMissAnimation) && char.hasMissAnimations)
@@ -4360,6 +4375,18 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 				gf.specialAnim = true;
 			}
+
+			if((note != null && note.dadsDuetNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].dadsDuetSection))
+				{
+					dad.playAnim(animToPlay, true);
+					dad2.playAnim(animToPlay, true);
+				}
+
+			if((note != null && note.bfsDuetNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].bfsDuetSection))
+				{
+					boyfriend.playAnim(animToPlay, true);
+					boyfriend2.playAnim(animToPlay, true);
+				}
 		}
 		vocals.volume = 0;
 	}
@@ -4380,7 +4407,7 @@ class PlayState extends MusicBeatState
 			var altAnim:String = note.animSuffix;
 
 			if (SONG.notes[curSection] != null)
-				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !SONG.notes[curSection].dad2Section && !SONG.notes[curSection].bf2Section)
+				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !SONG.notes[curSection].dad2Section && !SONG.notes[curSection].bf2Section && !SONG.notes[curSection].dadsDuetSection && !SONG.notes[curSection].bfsDuetSection)
 					altAnim = '-alt';
 			
 
@@ -4389,6 +4416,18 @@ class PlayState extends MusicBeatState
 			if(note.gfNote) char = gf;
 			if(note.dad2Note) char = dad2;
 			if(note.bf2Note) char = boyfriend2;
+			if(note.dadsDuetNote)
+				{
+					dad.playAnim(animToPlay, true);
+					dad2.playAnim(animToPlay, true);
+				}
+	
+			if(note.bfsDuetNote)
+			{
+				boyfriend.playAnim(animToPlay, true);
+				boyfriend2.playAnim(animToPlay, true);
+			}
+			
 			char.recalculateDanceIdle();
 
 			if(char != null)
@@ -4476,6 +4515,18 @@ class PlayState extends MusicBeatState
 				char = boyfriend2;
 				animCheck = 'hey';
 				char.recalculateDanceIdle();
+			}
+
+			if(note.dadsDuetNote)
+				{
+					dad.playAnim(animToPlay, true);
+					dad2.playAnim(animToPlay, true);
+				}
+	
+			if(note.bfsDuetNote)
+			{
+				boyfriend.playAnim(animToPlay, true);
+				boyfriend2.playAnim(animToPlay, true);
 			}
 
 			if(char != null)
@@ -4723,6 +4774,8 @@ class PlayState extends MusicBeatState
 			setOnScripts('gfSection', SONG.notes[curSection].gfSection);
 			setOnScripts('bf2Section', SONG.notes[curSection].bf2Section);
 			setOnScripts('dad2Section', SONG.notes[curSection].dad2Section);
+			setOnScripts('dadsDuetSection', SONG.notes[curSection].dadsDuetSection);
+			setOnScripts('bfsDuetSection', SONG.notes[curSection].bfsDuetSection);
 		}
 		super.sectionHit();
 
@@ -5313,45 +5366,5 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
-		}
-	public function charFloat()
-		{
-			var curChar:String;
-			if (dad != null && dad.curCharacter != "") {
-				curChar = dad.curCharacter;
-			} else if (boyfriend != null && boyfriend.curCharacter != "") {
-				curChar = boyfriend.curCharacter;
-			} else if (dad2 != null && dad2.curCharacter != "") {
-				curChar = dad2.curCharacter;
-			} else if (boyfriend2 != null && boyfriend2.curCharacter != "") {
-				curChar = boyfriend2.curCharacter;
-			} else if (gf != null && gf.curCharacter != "") {
-				curChar = gf.curCharacter;
-			} else {
-				curChar = ""; // or assign a default value if needed
-			}
-	
-			switch (curChar)
-			{
-				//case 'fleetway':
-					//flyTarg = dad;
-					//floatyY = 10;
-					//floatyTime = 10;
-					//flyState = 'hover';
-			}
-	
-			switch (flyState)
-			{
-				case 'hover' | 'hovering':
-					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 1.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-				case 'fly' | 'flying':
-					FlxTween.tween(flyTarg, {y: flyTarg.y * floatyY}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-					FlxTween.tween(flyTarg, {x: flyTarg.x * floatyX}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-				case 'sHover' | 'sHovering':
-					FlxTween.tween(flyTarg, {y: flyTarg.y + floatyY * 0.5}, floatyTime, {ease: FlxEase.quadInOut, type: PINGPONG}); 
-			}
-
-			trace("Char " + curChar + " is floating with " + flyState + " state,so theyre floating now ig");
-
 		}
 }

@@ -50,8 +50,8 @@ class Song
 	public var stage:String;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
-	public var isDad2:Bool = true;
-	public var isBf2:Bool = true;
+	public var isDad2:Bool = false;
+	public var isBf2:Bool = false;
 	public var player4:String = 'bf-Pixel';
 	public var player5:String = 'ycr';
 	public var gfVersion:String = 'gf';

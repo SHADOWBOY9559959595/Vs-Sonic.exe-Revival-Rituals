@@ -57,6 +57,8 @@ class ChartingState extends MusicBeatState
 		'GF Sing',
 		'Dad2 Sing',
 		'BF2 Sing',
+		'Dads Duet',
+		'Bfs Duet',
 		'No Animation',
 		'Static Note',
 		'Phantom Note'
@@ -694,6 +696,8 @@ class ChartingState extends MusicBeatState
 	var check_gfSection:FlxUICheckBox;
 	var check_dad2Section:FlxUICheckBox;
 	var check_bf2Section:FlxUICheckBox;
+	var check_dadsDuetSection:FlxUICheckBox;
+	var check_bfsDuetSection:FlxUICheckBox;
 	var check_changeBPM:FlxUICheckBox;
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
@@ -721,6 +725,14 @@ class ChartingState extends MusicBeatState
 		check_bf2Section = new FlxUICheckBox(check_gfSection.x + 120, check_dad2Section.y + 22, null, null, "BF2 section", 100);
 		check_bf2Section.name = 'check_bf2';
 		check_bf2Section.checked = _song.notes[curSec].bf2Section;
+
+		check_dadsDuetSection = new FlxUICheckBox(check_gfSection.x + 120, check_bf2Section.y + 22, null, null, "Dads Duet Section", 100);
+		check_dadsDuetSection.name = 'check_dadsDuet';
+		check_dadsDuetSection.checked = _song.notes[curSec].dadsDuetSection;
+
+		check_bfsDuetSection = new FlxUICheckBox(check_gfSection.x + 120, check_dadsDuetSection.y + 22, null, null, "BFs Duet Section", 100);
+		check_bfsDuetSection.name = 'check_bfsDuet';
+		check_bfsDuetSection.checked = _song.notes[curSec].bfsDuetSection;
 
 		// _song.needsVoices = check_mustHit.checked;
 
@@ -955,6 +967,8 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(check_gfSection);
 		tab_group_section.add(check_dad2Section);
 		tab_group_section.add(check_bf2Section);
+		tab_group_section.add(check_dadsDuetSection);
+		tab_group_section.add(check_bfsDuetSection);
 		tab_group_section.add(check_altAnim);
 		tab_group_section.add(check_changeBPM);
 		tab_group_section.add(copyButton);
@@ -1645,6 +1659,12 @@ class ChartingState extends MusicBeatState
 					
 					updateGrid();
 					updateHeads();
+
+				case 'Dads Duet Section':
+					_song.notes[curSec].dadsDuetSection = check.checked;
+
+				case 'BFs Duet Section':
+					_song.notes[curSec].bfsDuetSection = check.checked;
 
 				case 'Change BPM':
 					_song.notes[curSec].changeBPM = check.checked;
@@ -2693,6 +2713,8 @@ class ChartingState extends MusicBeatState
 		check_bf2Section.checked = sec.bf2Section;
 		check_gfSection.checked = sec.gfSection;
 		check_dad2Section.checked = sec.dad2Section;
+		check_dadsDuetSection.checked = sec.dadsDuetSection;
+		check_bfsDuetSection.checked = sec.bfsDuetSection;
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
@@ -2998,6 +3020,8 @@ class ChartingState extends MusicBeatState
 			gfSection: false,
 			dad2Section: false,
 			bf2Section: false,
+			dadsDuetSection: false,
+			bfsDuetSection: false,
 			sectionNotes: [],
 			altAnim: false
 		};
