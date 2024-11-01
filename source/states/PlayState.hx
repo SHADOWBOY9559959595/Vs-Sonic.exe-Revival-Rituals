@@ -2592,13 +2592,13 @@ class PlayState extends MusicBeatState
 					offsetX = 150;
 					cameraOffset = opponent2CameraOffset;
 				} else if (dadsDuetSection) {
-					character = dad2;
+					character = dad;
 					offsetX = 150;
-					cameraOffset = opponent2CameraOffset;
+					cameraOffset = opponentCameraOffset;
 				} else if (bfsDuetSection) {
-					character = boyfriend2;
+					character = boyfriend;
 					offsetX = 150;
-					cameraOffset = boyfriend2CameraOffset;
+					cameraOffset = boyfriendCameraOffset;
 				} else if (isMustHitSection) {
 					character = boyfriend;
 					offsetX = -100;
@@ -4376,12 +4376,6 @@ class PlayState extends MusicBeatState
 				gf.specialAnim = true;
 			}
 
-			if((note != null && note.dadsDuetNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].dadsDuetSection))
-				{
-					dad.playAnim(animToPlay, true);
-					dad2.playAnim(animToPlay, true);
-				}
-
 			if((note != null && note.bfsDuetNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].bfsDuetSection))
 				{
 					boyfriend.playAnim(animToPlay, true);
@@ -4421,13 +4415,7 @@ class PlayState extends MusicBeatState
 					dad.playAnim(animToPlay, true);
 					dad2.playAnim(animToPlay, true);
 				}
-	
-			if(note.bfsDuetNote)
-			{
-				boyfriend.playAnim(animToPlay, true);
-				boyfriend2.playAnim(animToPlay, true);
-			}
-			
+
 			char.recalculateDanceIdle();
 
 			if(char != null)
@@ -4516,12 +4504,6 @@ class PlayState extends MusicBeatState
 				animCheck = 'hey';
 				char.recalculateDanceIdle();
 			}
-
-			if(note.dadsDuetNote)
-				{
-					dad.playAnim(animToPlay, true);
-					dad2.playAnim(animToPlay, true);
-				}
 	
 			if(note.bfsDuetNote)
 			{
