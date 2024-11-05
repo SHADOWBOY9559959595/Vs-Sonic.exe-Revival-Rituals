@@ -14,6 +14,7 @@ import states.MainMenuState;
 import objects.HealthIcon;
 import objects.Bar;
 import backend.SonicTransitionState;
+import openfl.Lib;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -187,6 +188,7 @@ class PauseSubState extends MusicBeatSubstate
                     case 'Restart':
                         restartSong();
                     case 'Exit':
+                        Lib.application.window.title = "Friday Night Funkin': Vs Sonic.exe: Revival Rituals";
                         #if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
                         PlayState.deathCounter = 0;
                         PlayState.seenCutscene = false;

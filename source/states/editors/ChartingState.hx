@@ -58,7 +58,7 @@ class ChartingState extends MusicBeatState
 		'Dad2 Sing',
 		'BF2 Sing',
 		'Dads Duet',
-		'Bfs Duet',
+		'BFs Duet',
 		'No Animation',
 		'Static Note',
 		'Phantom Note'
@@ -83,7 +83,6 @@ class ChartingState extends MusicBeatState
 		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (dad, bf, gf, bf2, dad2)\nValue 2: New character's name"],
-		['Change Stage', "Value 1: New stages name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
 		['Play Sound', "Value 1: Sound file name\nValue 2"],
@@ -696,8 +695,6 @@ class ChartingState extends MusicBeatState
 	var check_gfSection:FlxUICheckBox;
 	var check_dad2Section:FlxUICheckBox;
 	var check_bf2Section:FlxUICheckBox;
-	var check_dadsDuetSection:FlxUICheckBox;
-	var check_bfsDuetSection:FlxUICheckBox;
 	var check_changeBPM:FlxUICheckBox;
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
@@ -725,14 +722,6 @@ class ChartingState extends MusicBeatState
 		check_bf2Section = new FlxUICheckBox(check_gfSection.x + 120, check_dad2Section.y + 22, null, null, "BF2 section", 100);
 		check_bf2Section.name = 'check_bf2';
 		check_bf2Section.checked = _song.notes[curSec].bf2Section;
-
-		check_dadsDuetSection = new FlxUICheckBox(check_gfSection.x + 120, check_bf2Section.y + 22, null, null, "Dads Duet Section", 100);
-		check_dadsDuetSection.name = 'check_dadsDuet';
-		check_dadsDuetSection.checked = _song.notes[curSec].dadsDuetSection;
-
-		check_bfsDuetSection = new FlxUICheckBox(check_gfSection.x + 120, check_dadsDuetSection.y + 22, null, null, "BFs Duet Section", 100);
-		check_bfsDuetSection.name = 'check_bfsDuet';
-		check_bfsDuetSection.checked = _song.notes[curSec].bfsDuetSection;
 
 		// _song.needsVoices = check_mustHit.checked;
 
@@ -967,8 +956,6 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(check_gfSection);
 		tab_group_section.add(check_dad2Section);
 		tab_group_section.add(check_bf2Section);
-		tab_group_section.add(check_dadsDuetSection);
-		tab_group_section.add(check_bfsDuetSection);
 		tab_group_section.add(check_altAnim);
 		tab_group_section.add(check_changeBPM);
 		tab_group_section.add(copyButton);
@@ -1659,12 +1646,6 @@ class ChartingState extends MusicBeatState
 					
 					updateGrid();
 					updateHeads();
-
-				case 'Dads Duet Section':
-					_song.notes[curSec].dadsDuetSection = check.checked;
-
-				case 'BFs Duet Section':
-					_song.notes[curSec].bfsDuetSection = check.checked;
 
 				case 'Change BPM':
 					_song.notes[curSec].changeBPM = check.checked;
@@ -2713,8 +2694,6 @@ class ChartingState extends MusicBeatState
 		check_bf2Section.checked = sec.bf2Section;
 		check_gfSection.checked = sec.gfSection;
 		check_dad2Section.checked = sec.dad2Section;
-		check_dadsDuetSection.checked = sec.dadsDuetSection;
-		check_bfsDuetSection.checked = sec.bfsDuetSection;
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
@@ -3020,8 +2999,6 @@ class ChartingState extends MusicBeatState
 			gfSection: false,
 			dad2Section: false,
 			bf2Section: false,
-			dadsDuetSection: false,
-			bfsDuetSection: false,
 			sectionNotes: [],
 			altAnim: false
 		};
