@@ -79,6 +79,9 @@ import states.stages.Fleetway;
 
 //Shaders shit
 import shaders.VCRDistortionShader;
+import shaders.RetroScreenShader;
+
+
 
 /**
  * This is where all the Gameplay stuff happens and is managed
@@ -379,6 +382,9 @@ class PlayState extends MusicBeatState
 	var floatyY:Float = 0;
 	var floatyTime:Float = 0;
 
+	//Shaders shit
+	public var shaderUpdates:Array<Float->Void> = [];
+
 	override public function create()
 	{
 		FlxG.autoPause = false;
@@ -472,6 +478,8 @@ class PlayState extends MusicBeatState
 			SONG.stage = StageData.vanillaSongStage(songName);
 		}
 		curStage = SONG.stage;
+
+		Lib.application.window.title = "Friday Night Funkin': Vs Sonic.exe: Revival Rituals - Now playing " + songName;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
@@ -655,6 +663,7 @@ class PlayState extends MusicBeatState
 				dad2 = new Character(0, 0, SONG.player5);
 				startCharacterPos(dad2, true);
 				dad2Group.add(dad2);
+				startCharacterScripts(dad2.curCharacter);
 			}
 
 		dad = new Character(0, 0, SONG.player2);
@@ -1140,9 +1149,9 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'round-a-bout':
-				var vcr:VCRDistortionShader;
-				vcr = new VCRDistortionShader();
-				curShader = new ShaderFilter(vcr);
+				var lolscrin:RetroScreenShader;
+				lolscrin = new RetroScreenShader();
+				curShader = new ShaderFilter(lolscrin);
 				camGame.setFilters([curShader]);
 				camHUD.setFilters([curShader]);
 				camOther.setFilters([curShader]);
@@ -1151,6 +1160,14 @@ class PlayState extends MusicBeatState
 				camHUD.setFilters([]);
 				camOther.setFilters([]);
 		}
+
+		if(songName == 'round-a-bout' && dad2.curCharacter == "Sarah")
+			{
+				dad2.visible = false;
+				iconP4.visible = false;
+				FlxTween.tween(dad2, { alpha: 0.5 }, 3, { type: FlxTween.PINGPONG });
+			}	
+
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -2161,6 +2178,8 @@ class PlayState extends MusicBeatState
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
 				swagNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
+				swagNote.dadsDuetNote = (songNotes[1]<4);
+				swagNote.bfsDuetNote = (songNotes[1]<4);
 				swagNote.noteType = songNotes[3];
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
@@ -2181,6 +2200,8 @@ class PlayState extends MusicBeatState
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.dad2Note = (section.dad2Section && (songNotes[1]<4));
 						sustainNote.bf2Note = (section.bf2Section && (songNotes[1]<4));
+						sustainNote.dadsDuetNote = (songNotes[1]<4);
+						sustainNote.bfsDuetNote = (songNotes[1]<4);
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
 						sustainNote.parent = swagNote;
@@ -2764,6 +2785,9 @@ class PlayState extends MusicBeatState
 		setOnScripts('cameraY', camFollow.y);
 		setOnScripts('botPlay', cpuControlled);
 		callOnScripts('onUpdatePost', [elapsed]);
+		for (i in shaderUpdates){
+			i(elapsed);
+	    }
 
 		//Phantom note shit
 		if(dropTime > 0)
@@ -3606,6 +3630,9 @@ class PlayState extends MusicBeatState
     			{
     			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
     			}
+			case 'Needle Photos':
+
+				
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
@@ -3712,6 +3739,7 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong()
 	{
+		Lib.application.window.title = "Friday Night Funkin': Vs Sonic.exe: Revival Rituals";
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -4340,6 +4368,7 @@ class PlayState extends MusicBeatState
 		if((note != null && note.gfNote) || (SONG.notes[curSection] != null && SONG.notes[curSection].gfSection)) char = gf;
 		if((note != null && note.dad2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].dad2Section)) char = dad2;
 		if((note != null && note.bf2Note) || (SONG.notes[curSection] != null && SONG.notes[curSection].bf2Section)) char = boyfriend2;
+
 		char.recalculateDanceIdle();
 
 		if(char != null && (note == null || !note.noMissAnimation) && char.hasMissAnimations)
@@ -4354,6 +4383,12 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 				gf.specialAnim = true;
+			}
+
+			switch(note.noteType) {
+				case 'BFs Duet':
+					boyfriend.playAnim(animToPlay , true);
+					boyfriend2.playAnim(animToPlay, true);
 			}
 		}
 		vocals.volume = 0;
@@ -4384,6 +4419,29 @@ class PlayState extends MusicBeatState
 			if(note.gfNote) char = gf;
 			if(note.dad2Note) char = dad2;
 			if(note.bf2Note) char = boyfriend2;
+
+			switch(note.noteType) {
+				case 'Dads Duet':
+					dad.playAnim(animToPlay + note.animSuffix, true);
+					dad.holdTimer = 0;
+					dad2.playAnim(animToPlay + note.animSuffix, true);
+					dad2.holdTimer = 0;
+				case 'BFs Duet':
+					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					boyfriend.holdTimer = 0;
+					boyfriend2.playAnim(animToPlay + note.animSuffix, true);
+					boyfriend2.holdTimer = 0;
+			}
+
+			if(songName == 'round-a-bout' && dad2.curCharacter == "Sarah")
+				{
+					dad.playAnim(animToPlay + note.animSuffix, true);
+					dad.holdTimer = 0;
+					dad2.playAnim(animToPlay + note.animSuffix, true);
+					dad2.holdTimer = 0;
+				}	
+
+
 			char.recalculateDanceIdle();
 
 			if(char != null)
@@ -4471,6 +4529,19 @@ class PlayState extends MusicBeatState
 				char = boyfriend2;
 				animCheck = 'hey';
 				char.recalculateDanceIdle();
+			}
+	
+			switch(note.noteType) {
+				case 'BFs Duet':
+					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					boyfriend.holdTimer = 0;
+					boyfriend2.playAnim(animToPlay + note.animSuffix, true);
+					boyfriend2.holdTimer = 0;
+				case 'Dads Duet':
+					dad.playAnim(animToPlay + note.animSuffix, true);
+					dad.holdTimer = 0;
+					dad2.playAnim(animToPlay + note.animSuffix, true);
+					dad2.holdTimer = 0;
 			}
 
 			if(char != null)

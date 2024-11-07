@@ -68,6 +68,8 @@ class Note extends FlxSprite
 	public var gfNote:Bool = false;
 	public var dad2Note:Bool = false;
 	public var bf2Note:Bool = false;
+	public var dadsDuetNote:Bool = false;
+	public var bfsDuetNote:Bool = false;
 	public var earlyHitMult:Float = 1;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
@@ -166,6 +168,10 @@ class Note extends FlxSprite
 					dad2Note = true;
 				case 'BF2 Sing':
 					bf2Note = true;
+				case 'Dads Duet':
+					dadsDuetNote = true;
+				case 'BFs Duet':
+					bfsDuetNote = true;
 				case 'Static Note':
 					reloadNote('Notes/STATICNOTE_assets');
 	

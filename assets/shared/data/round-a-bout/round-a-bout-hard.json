@@ -1,8 +1,6 @@
 {
 	"song": {
-		"sectionLengths": [],
 		"player1": "bf-needle",
-		"gfVersion": "gf-needlemouse",
 		"player2": "Needlemouse",
 		"notes": [
 			{
@@ -3389,8 +3387,9 @@
 				"mustHitSection": false
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						107943.925233645,
@@ -3448,15 +3447,16 @@
 						140.18691588785
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						109906.542056075,
@@ -3519,15 +3519,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": true,
 				"sectionNotes": [
 					[
 						112990.654205608,
@@ -3605,15 +3606,16 @@
 						280.373831775701
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": true
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						114672.897196262,
@@ -3671,15 +3673,16 @@
 						1542.05607476636
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						116635.514018692,
@@ -3752,15 +3755,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": true,
 				"sectionNotes": [
 					[
 						119299.065420561,
@@ -3843,15 +3847,16 @@
 						140.18691588785
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 92,
 				"changeBPM": false,
-				"mustHitSection": true
+				"bpm": 92
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						121401.869158879,
@@ -3954,15 +3959,16 @@
 						1401.8691588785
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 112.5,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 112.5
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						123364.485981309,
@@ -4040,15 +4046,16 @@
 						700.934579439252
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						125607.476635514,
@@ -4116,15 +4123,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": true,
 				"sectionNotes": [
 					[
 						127850.46728972,
@@ -4227,15 +4235,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": true
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": true,
 				"sectionNotes": [
 					[
 						130654.205607477,
@@ -4308,15 +4317,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": true
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						132336.448598131,
@@ -4424,15 +4434,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						134579.439252337,
@@ -4465,15 +4476,16 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
+				"dadsDuetSection": true,
+				"altAnim": false,
+				"mustHitSection": false,
 				"sectionNotes": [
 					[
 						137102.803738318,
@@ -4521,11 +4533,11 @@
 						0
 					]
 				],
-				"altAnim": false,
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
 				"gfSection": false,
-				"bpm": 100,
 				"changeBPM": false,
-				"mustHitSection": false
+				"bpm": 100
 			},
 			{
 				"lengthInSteps": 16,
@@ -8532,559 +8544,48 @@
 				"bpm": 107
 			},
 			{
-				"gfSection": false,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
-				"bpm": 107,
 				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 107,
 				"changeBPM": false,
 				"mustHitSection": true
 			},
 			{
-				"gfSection": false,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
-				"bpm": 107,
 				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 107,
 				"changeBPM": false,
 				"mustHitSection": true
 			}
 		],
+		"player3": null,
+		"player4": null,
+		"player5": "Sarah",
+		"isDad2": true,
+		"song": "Round-A-Bout",
+		"validScore": true,
+		"speed": 2.7,
+		"sectionLengths": [],
+		"gfVersion": "gf-needlemouse",
 		"events": [
 			[
-				0,
-				[
-					[
-						"Set offBeat Zoom",
-						"2",
-						"1.25"
-					]
-				]
-			],
-			[
-				2242.99065420561,
-				[
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
-					]
-				]
-			],
-			[
-				3925.23364485981,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				8411.21495327103,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				12897.1962616822,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				20186.9158878505,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					],
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
-					]
-				]
-			],
-			[
-				30841.1214953271,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				35887.8504672897,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				36869.1588785047,
-				[
-					[
-						"Camgame Zoom",
-						"0.65",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				38130.8411214953,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				39813.0841121495,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				44859.8130841121,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				45841.1214953271,
-				[
-					[
-						"Camgame Zoom",
-						"0.65",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				47102.8037383178,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					],
-					[
-						"Set offBeat Zoom",
-						"1",
-						"0"
-					],
-					[
-						"Set Beat Zoom",
-						"1",
-						"1.5"
-					],
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
-					]
-				]
-			],
-			[
-				48785.046728972,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				50467.2897196262,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				51028.0373831776,
-				[
-					[
-						"Camgame Zoom",
-						"0.7",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				51588.785046729,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				52710.2803738318,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				53831.7757009346,
-				[
-					[
-						"Camgame Zoom",
-						"0.7",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				56074.7663551402,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				57757.0093457944,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				58317.7570093458,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				59439.2523364486,
-				[
-					[
-						"Camgame Zoom",
-						"0.7",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				60560.7476635514,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				62803.738317757,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"8 expoOut"
-					]
-				]
-			],
-			[
-				65046.7289719626,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					],
-					[
-						"Set offBeat Zoom",
-						"2",
-						"1.25"
-					],
-					[
-						"Set Beat Zoom",
-						"1",
-						"0"
-					],
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
-					]
-				]
-			],
-			[
-				66728.9719626168,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				75700.9345794392,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				82990.6542056075,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					],
-					[
-						"Change Scroll Speed",
-						"1.1",
-						"3"
-					],
-					[
-						"Set offBeat Zoom",
-						"1",
-						"0"
-					],
-					[
-						"Set Beat Zoom",
-						"1",
-						"1.5"
-					],
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
-					],
-					[
-						"Set Property",
-						"cameraSpeed",
-						"1.5"
-					]
-				]
-			],
-			[
-				84672.8971962617,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				87476.6355140187,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					]
-				]
-			],
-			[
-				89719.6261682243,
-				[
-					[
-						"Camgame Zoom",
-						"0.55",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				90841.1214953271,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				91401.8691588785,
-				[
-					[
-						"Camgame Zoom",
-						"0.65",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				91962.6168224299,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				93644.8598130841,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				94205.6074766355,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				96448.5981308412,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					]
-				]
-			],
-			[
-				98691.5887850468,
-				[
-					[
-						"Camgame Zoom",
-						"0.55",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				99813.0841121496,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				100934.579439252,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					]
-				]
-			],
-			[
-				100934.579439252,
+				107663.551401869,
 				[
 					[
 						"Set Property",
-						"cameraSpeed",
-						"0.8"
-					]
-				]
-			],
-			[
-				102616.822429907,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				104018.691588785,
-				[
-					[
-						"Camgame Zoom",
-						"0.8",
-						"28 sineInOut"
+						"dad2.visible",
+						"1"
 					],
 					[
-						"Set Beat Zoom",
-						"1",
-						"0"
-					]
-				]
-			],
-			[
-				107803.738317757,
-				[
-					[
 						"Set Property",
-						"cameraSpeed",
-						"2"
-					]
-				]
-			],
-			[
-				107943.925233645,
-				[
-					[
-						"needle stage",
-						"1",
-						""
+						"iconP4.visible",
+						"1"
 					],
 					[
 						"Change Character",
@@ -9095,77 +8596,12 @@
 						"Change Character",
 						"gf",
 						"gf-needlemouse-scared"
-					],
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					],
-					[
-						"Change Scroll Speed",
-						"1.15",
-						"4"
 					]
 				]
 			],
 			[
-				110467.289719626,
+				136822.429906542,
 				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				117196.261682243,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				123925.23364486,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				130654.205607477,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				136962.61682243,
-				[
-					[
-						"Set Property",
-						"cameraSpeed",
-						"1.5"
-					]
-				]
-			],
-			[
-				137102.803738318,
-				[
-					[
-						"needle stage",
-						"0",
-						""
-					],
 					[
 						"Change Character",
 						"dad",
@@ -9175,172 +8611,13 @@
 						"Change Character",
 						"gf",
 						"gf-needlemouse"
-					],
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					],
-					[
-						"Change Scroll Speed",
-						"1.05",
-						""
-					],
-					[
-						"Set Beat Zoom",
-						"1",
-						"1.25"
-					]
-				]
-			],
-			[
-				138785.046728972,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				146074.76635514,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"8 expoOut"
-					],
-					[
-						"Set Beat Zoom",
-						"1",
-						"1.5"
-					]
-				]
-			],
-			[
-				147757.009345795,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				150420.560747664,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					]
-				]
-			],
-			[
-				152803.738317757,
-				[
-					[
-						"Camgame Zoom",
-						"0.6",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				153084.112149533,
-				[
-					[
-						"Set Beat Zoom",
-						"1",
-						"1.75"
-					]
-				]
-			],
-			[
-				155046.728971963,
-				[
-					[
-						"Camgame Zoom",
-						"0.7",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				155327.102803738,
-				[
-					[
-						"Set Beat Zoom",
-						"1",
-						"2"
-					]
-				]
-			],
-			[
-				156728.971962617,
-				[
-					[
-						"Note Spin",
-						"1",
-						""
-					]
-				]
-			],
-			[
-				157289.719626168,
-				[
-					[
-						"Camgame Zoom",
-						"0.8",
-						"4 expoOut"
-					]
-				]
-			],
-			[
-				157570.093457944,
-				[
-					[
-						"Set Beat Zoom",
-						"1",
-						"2.25"
-					]
-				]
-			],
-			[
-				159252.336448598,
-				[
-					[
-						"Set Beat Zoom",
-						"1",
-						"0"
-					]
-				]
-			],
-			[
-				159532.710280374,
-				[
-					[
-						"Camgame Zoom",
-						"0.5",
-						"8 expoOut"
-					],
-					[
-						"cameraFlash",
-						"camGame FF1248",
-						"8"
 					]
 				]
 			]
 		],
-		"player3": null,
-		"song": "Round-A-Bout",
 		"needsVoices": true,
-		"validScore": true,
 		"sections": 0,
-		"stage": "needle",
-		"speed": 2.7,
+		"stage": "tooSlow",
 		"bpm": 107
 	}
 }
