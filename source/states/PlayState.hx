@@ -583,7 +583,7 @@ class PlayState extends MusicBeatState
 			case 'ycr': new states.stages.YCR();
 			case 'majinForestBlue': new states.stages.MajinForestBlue();
 			case 'fleetway': new states.stages.Fleetway();
-			case 'needlemouse': new states.stages.Fleetway();
+			case 'needleMouse': new states.stages.NeedleMouse();
 		}
 
 		if(isPixelStage) {
@@ -3631,7 +3631,7 @@ class PlayState extends MusicBeatState
     			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
     			}
 			case 'Needle Photos':
-
+				//needlePhotos();
 				
 		}
 
@@ -5379,5 +5379,5 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
-		}
+		}					
 }

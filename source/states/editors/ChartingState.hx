@@ -93,7 +93,7 @@ class ChartingState extends MusicBeatState
 		['sonicspook', "booo scary booo"],
 		['Note spin', "leave blank lol\nput them 3 beats away from each other"],
 		['Cinematic Bars', "value 1: Height of the bars\nvalue 2: tweening in speed\nfor dissapearing the bars, leave blank or 0"],
-		['Green Hill', "Exclusive to YCR Stage\nValue 1: if set to GH, it'll turn everything into GH stage\n if set to noGH it'll turn everithing into normal YCR stage."],
+		['Stage Change', "Change stage ONLY WORKS FOR COMPATIBLE ONES\nValue 1: Target Stage\nValue 2: Change stahe value."],
 		['Pickel', "Lol pickel reference\nValue 1:\nye sets sonicHUD on\nno sets normal ui "],
 		['Countdown', "Funny countdown (liv blenk)."],
 		['Song End', "Funny Song ending\nvalue 1: tweening in bars speed."],
@@ -105,6 +105,7 @@ class ChartingState extends MusicBeatState
 		['Window fucking moves', "Value 1: X amount\nValue2: Y amount\nIf both null, it will do nothing"],
 		['Window fucking shakes', "leave blank"],
 		['Set Cam Follow', "Value 1:\nIf set to bf, it will set the camera position to bf\nIf set to dad, it will set the camera position to dad\nIf set to reset, it will reset the camera to normal"],
+		['Needle Photos', ""],
 	];
 	
 

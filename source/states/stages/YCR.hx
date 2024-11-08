@@ -122,33 +122,36 @@ class YCR extends BaseStage
         {
             switch(eventName)
             {
-                case "Green Hill":
-                    if (value1 == "GH") {
+                case "Stage Change":
+                    if (value1 == "Green Hill")
+                    {
+                        if (value2 == "1") {
 
-                        sky.visible = false;
-                        backtrees.visible = false;
-                        trees.visible = false;
-                        ground.visible = false;
+                            sky.visible = false;
+                            backtrees.visible = false;
+                            trees.visible = false;
+                            ground.visible = false;
 
-                        skyGH.visible = true;
-                        mountainsGH.visible = true;
-                        waterGH.visible = true;
-                        groundGH.visible = true;
-                        flowersGH.visible = true;
-                        objectsGH.visible = true;
-                    } else if (value1 == "noGH") {
+                            skyGH.visible = true;
+                            mountainsGH.visible = true;
+                            waterGH.visible = true;
+                            groundGH.visible = true;
+                            flowersGH.visible = true;
+                            objectsGH.visible = true;
+                        } else if (value2 == "2") {
 
-                        sky.visible = true;
-                        backtrees.visible = true;
-                        trees.visible = true;
-                        ground.visible = true;
+                            sky.visible = true;
+                            backtrees.visible = true;
+                            trees.visible = true;
+                            ground.visible = true;
 
-                        skyGH.visible = false;
-                        mountainsGH.visible = false;
-                        waterGH.visible = false;
-                        groundGH.visible = false;
-                        flowersGH.visible = false;
-                        objectsGH.visible = false;
+                            skyGH.visible = false;
+                            mountainsGH.visible = false;
+                            waterGH.visible = false;
+                            groundGH.visible = false;
+                            flowersGH.visible = false;
+                            objectsGH.visible = false;
+                        }
                     }
             }
         }

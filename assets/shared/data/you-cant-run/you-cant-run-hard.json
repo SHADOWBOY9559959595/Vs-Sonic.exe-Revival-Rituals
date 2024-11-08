@@ -328,9 +328,9 @@
 				56571.4285714286,
 				[
 					[
+						"Stage Change",
 						"Green Hill",
-						"GH",
-						""
+						"1"
 					],
 					[
 						"static",
@@ -568,9 +568,9 @@
 						"YCR_Mad"
 					],
 					[
+						"Stage Change",
 						"Green Hill",
-						"noGH",
-						""
+						"2"
 					],
 					[
 						"Change Character",

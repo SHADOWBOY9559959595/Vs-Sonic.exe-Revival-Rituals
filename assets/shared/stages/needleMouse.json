@@ -1,0 +1,19 @@
+{
+	"directory": "stages/needlemouse", 
+	"defaultZoom": 0.6,
+	"stageUI": "",
+
+	"boyfriend": [ 1100, 350 ],
+	"boyfriend2": [87, 500],
+	"girlfriend": [ 1450, 450 ],
+	"opponent": [ -200, 350 ],
+	"opponent2": [ -170, 220 ],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-220, 0],
+	"camera_boyfriend2": [100, 100],
+	"camera_opponent": [200, 0],
+	"camera_opponent2": [-100, -100],
+	"camera_girlfriend": [25, 140],
+	"camera_speed": 1
+}
