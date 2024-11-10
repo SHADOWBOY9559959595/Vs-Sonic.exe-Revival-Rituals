@@ -37,6 +37,7 @@ import objects.HealthIcon;
 import objects.AttachedSprite;
 import objects.Character;
 import substates.Prompt;
+import objects.FatalPopup;
 
 
 #if sys
@@ -100,12 +101,12 @@ class ChartingState extends MusicBeatState
 		['Change Noteskin', "Funny Song change noteskin\nvalue 1: new noteskin name.\nNEEDS TO BE IN NOTESKINS\n AND HAVE 'NOTE_assets-name'\nif youre not stupid, name needs to be your noteskin"],
 		['Majin count', "Majin fucking says fuck what a fuckitty fuck o my fucking god fuck shit cock and balls fucking my fucking cock is fucking my fucking i dont fucking now oh my fucking god"],
 		['Fleet Attack', "FLEET FUCKING ATTACKS OH MY GOD"],
-		['Fatality Popup', "fatality popup, duh"],
-		['Clear Popups', "clear fatality popups"],
+		["Fatality Popup","Fatality Popup WOo.\nValue 1: Amount of popups\nValue 2: Type (1, 2 or 3)\nType 2 ignores the hard cap of " + FatalPopup.limit + " popups\nand are also a bit bigger\nType 3 is the same but alot bigger"],
+		["Clear Popups","Removes all fatality popups"],
 		['Window fucking moves', "Value 1: X amount\nValue2: Y amount\nIf both null, it will do nothing"],
 		['Window fucking shakes', "leave blank"],
 		['Set Cam Follow', "Value 1:\nIf set to bf, it will set the camera position to bf\nIf set to dad, it will set the camera position to dad\nIf set to reset, it will reset the camera to normal"],
-		['Needle Photos', ""],
+		['Needle Text', ""],
 	];
 	
 

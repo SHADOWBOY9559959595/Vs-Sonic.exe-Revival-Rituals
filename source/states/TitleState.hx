@@ -79,7 +79,7 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(1.55, function(tmr:FlxTimer)
                 {
-					FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, 1.5);
+					FlxG.camera.flash(FlxColor.RED, 1.5);
 					
 					FlxG.sound.play(Paths.sound('IntroRING'));
 					new FlxTimer().start(0.4, function(tmr:FlxTimer)
@@ -113,7 +113,7 @@ class TitleState extends MusicBeatState
 				{
 					enterPressed = true;  // Set the flag to true to prevent further presses
 		
-					FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, 1);
+					FlxG.camera.flash(FlxColor.RED, 1);
 		
 					titleEnter.animation.play('pressed', true);
 					FlxG.sound.play(Paths.sound('menumomentclick'), 0.7);

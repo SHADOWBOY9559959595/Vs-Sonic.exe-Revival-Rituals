@@ -188,12 +188,16 @@ class PauseSubState extends MusicBeatSubstate
                     case 'Restart':
                         restartSong();
                     case 'Exit':
+                        SonicTransitionState.skipNextTransOut = false;
+                        SonicTransitionState.skipNextTransIn = false;
+
                         Lib.application.window.title = "Friday Night Funkin': Vs Sonic.exe: Revival Rituals";
                         #if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
                         PlayState.deathCounter = 0;
                         PlayState.seenCutscene = false;
 
                         MusicBeatState.switchState(new MainMenuState());
+                        
                         FlxG.sound.playMusic(Paths.music('freakyMenu'));
                 }
             }

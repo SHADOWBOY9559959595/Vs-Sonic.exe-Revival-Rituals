@@ -375,13 +375,8 @@ class PlayState extends MusicBeatState
 	public var sunkerTimebarFuckery:Bool = false;
 	public var sunkerTimebarNumber:Int;	
 
-	//Flying shit
-	var flyTarg:Character;
-	var flyState:String = '';
-	var floatyX:Float = 0;
-	var floatyY:Float = 0;
-	var floatyTime:Float = 0;
-
+	//Ftality popups
+	var popup:FatalPopup;
 	//Shaders shit
 	public var shaderUpdates:Array<Float->Void> = [];
 
@@ -1698,7 +1693,7 @@ class PlayState extends MusicBeatState
 
 			new FlxTimer().start(0.45, function(tmr:FlxTimer) {
 				needleBad.visible = false;
-				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, 1.2);
+				FlxG.camera.flash(FlxColor.RED, 1.2);
 			});
 		});
 	}});
@@ -2802,7 +2797,8 @@ class PlayState extends MusicBeatState
 				dropTime = 0;
 			}
 
-		managePopups();
+		if(popup != null)
+			managePopups();
 
 		//fatality window shit
 		if (SONG.song.toLowerCase() == 'fatality' && IsWindowMoving)
@@ -3447,8 +3443,7 @@ class PlayState extends MusicBeatState
 
 			case 'Flash Camera red':
 				if (flValue1 == null) flValue1 = 1;
-
-				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.RED : 0xFFFF0000, flValue1);
+				FlxG.camera.flash(FlxColor.RED, flValue1);
 
 			case 'RedVG':
 				if (flValue1 == null) flValue1 = 2.5;
@@ -3630,9 +3625,22 @@ class PlayState extends MusicBeatState
     			{
     			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
     			}
-			case 'Needle Photos':
-				//needlePhotos();
+			case 'Needle Text':
+				var texts:Array<String> = ['1963','I KNOw wHERe yoU livE','I\'M TRAPPED','30 YEARS','30 LONG YEARS..','MOM','DAD','LILY','I REMEMBER EVERYTHING','THERE IS NO GOD.','YOU ARE IN MY WORLD NOW.','803 Branch Lane Kennersville, NC 27284','I CAN STILL FEEL THE PAIN'];
+				var textlook:FlxText;
+				var randomIndex:Int = Std.random(texts.length);
+				var selectedText:String = texts[randomIndex]; 
 				
+				var textlook:FlxText = new FlxText(0, 0, 0, selectedText, 80); 
+				textlook.setFormat(Paths.font("Limelight.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.PURPLE);
+				textlook.setPosition(getRandomInt(0, Std.int(FlxG.width - textlook.width)), getRandomInt(0, Std.int(FlxG.height - textlook.height)));  
+				textlook.scrollFactor.set(); 
+				textlook.cameras = [camOther]; 
+				add(textlook); 
+
+				new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+					textlook.destroy();
+				});
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
@@ -5331,7 +5339,7 @@ class PlayState extends MusicBeatState
 
 	function doPopup(type:Int)
 		{
-			var popup = new FatalPopup(0, 0, type);
+			popup = new FatalPopup(0, 0, type);
 			var popuppos:Array<Int> = [getRandomInt(0, Std.int(FlxG.width - popup.width)), getRandomInt(0, Std.int(FlxG.height - popup.height))];
 			popup.x = popuppos[0];
 			popup.y = popuppos[1];
