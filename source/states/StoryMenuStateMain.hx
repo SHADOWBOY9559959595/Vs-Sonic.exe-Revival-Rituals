@@ -298,7 +298,7 @@ class StoryMenuStateMain extends MusicBeatState
             
                 if (songs.length > 0)
                 {
-                    PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase() + '-hard', songs[songSelec].toLowerCase());
+                    PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase(), songs[songSelec].toLowerCase());
                     PlayState.isStoryMode = false;
                     trace('Switching to PlayState with song: ' + PlayState.SONG.song);
             

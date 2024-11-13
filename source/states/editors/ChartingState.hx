@@ -107,6 +107,8 @@ class ChartingState extends MusicBeatState
 		['Window fucking shakes', "leave blank"],
 		['Set Cam Follow', "Value 1:\nIf set to bf, it will set the camera position to bf\nIf set to dad, it will set the camera position to dad\nIf set to reset, it will reset the camera to normal"],
 		['Needle Text', ""],
+		['Needle static', "Value 1: if empty, adds static\nif set to 1, static will be destroyed"],
+		['Needle photos', ""],
 	];
 	
 

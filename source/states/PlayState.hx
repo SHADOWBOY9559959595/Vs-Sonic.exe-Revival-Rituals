@@ -70,7 +70,7 @@ import flixel.system.scaleModes.RatioScaleMode;
 import flixel.system.scaleModes.StageSizeScaleMode;
 import flixel.FlxState;
 
-//fatality window shit}
+//fatality window shit
 import openfl.Lib;
 import objects.FatalPopup;
 
@@ -316,6 +316,7 @@ class PlayState extends MusicBeatState
 	private var topBar:FlxSprite; //Cinematics
     private var botBar:FlxSprite; //Cinematics
 	var canDodge:Bool = false; //Fleetway shit
+	var needlestat:FlxSprite; //needle static shit
 
 	//SONIC HUD SHITSS!!!!
 	public var minNumber:SonicNumber;
@@ -579,6 +580,7 @@ class PlayState extends MusicBeatState
 			case 'majinForestBlue': new states.stages.MajinForestBlue();
 			case 'fleetway': new states.stages.Fleetway();
 			case 'needleMouse': new states.stages.NeedleMouse();
+			case 'prey': new states.stages.Prey();
 		}
 
 		if(isPixelStage) {
@@ -3441,8 +3443,9 @@ class PlayState extends MusicBeatState
 				}
 
 
-			case 'Flash Camera red':
+			case 'Flash Camera Red':
 				if (flValue1 == null) flValue1 = 1;
+				trace("camera flashed");
 				FlxG.camera.flash(FlxColor.RED, flValue1);
 
 			case 'RedVG':
@@ -3626,7 +3629,7 @@ class PlayState extends MusicBeatState
     			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
     			}
 			case 'Needle Text':
-				var texts:Array<String> = ['1963','I KNOw wHERe yoU livE','I\'M TRAPPED','30 YEARS','30 LONG YEARS..','MOM','DAD','LILY','I REMEMBER EVERYTHING','THERE IS NO GOD.','YOU ARE IN MY WORLD NOW.','803 Branch Lane Kennersville, NC 27284','I CAN STILL FEEL THE PAIN'];
+				var texts:Array<String> = ['1963','I KNOw wHERe yoU livE','I\'M TRAPPED','30 YEARS','30 LONG YEARS..','MOM','DAD','LILY','I REMEMBER EVERYTHING','THERE IS NO GOD.','YOU ARE IN MY WORLD NOW.','803 Branch Lane Kennersville, NC 27284','I CAN STILL FEEL THE PAIN', 'Damn, this gyatt is a lot harder than i thought'];
 				var textlook:FlxText;
 				var randomIndex:Int = Std.random(texts.length);
 				var selectedText:String = texts[randomIndex]; 
@@ -3641,6 +3644,26 @@ class PlayState extends MusicBeatState
 				new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 					textlook.destroy();
 				});
+			case 'Needle static':
+				if(needlestat == null)
+					{
+						needlestat = new FlxSprite().setFrames(Paths.getSparrowAtlas('lowstat'));
+						needlestat.animation.addByPrefix('stat', 'stat', 20, true);
+						needlestat.animation.play('stat');
+						needlestat.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+						needlestat.alpha = 0.4;
+						needlestat.screenCenter(XY);
+						needlestat.camera = camOther;
+						add(needlestat);
+					}
+
+				if(value1 == '1')
+					{
+						needlestat.destroy();
+						trace("static destroyed");
+					}
+			case 'Needle photos':
+
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
@@ -5387,5 +5410,5 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
-		}					
+		}		
 }

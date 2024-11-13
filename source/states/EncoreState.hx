@@ -187,7 +187,7 @@ class EncoreState extends MusicBeatState
 
         if (songs.length > 0)
         {
-            PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase() + '-hard', songs[songSelec].toLowerCase());
+            PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase(), songs[songSelec].toLowerCase());
             trace('Switching to PlayState with song: ' + PlayState.SONG.song);
 
             LoadingState.loadAndSwitchState(new PlayState());

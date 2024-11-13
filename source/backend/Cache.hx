@@ -62,12 +62,12 @@ class Cache extends MusicBeatState
 			images.push(i);
 		}
 
-		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/fpstuff")))
-			{
-				if (!i.endsWith(".png"))
-					continue;
-				freeplay.push(i);
-			}
+		//for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/fpstuff")))
+		//	{
+		//		if (!i.endsWith(".png"))
+		//			continue;
+		//		freeplay.push(i);
+		//	}
 
 		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/ecstuff")))
 			{
@@ -109,16 +109,16 @@ class Cache extends MusicBeatState
 			trace(i);
 		}
 
-		for (i in freeplay)
-			{
-				var replaced = i.replace(".png","");
-				var data:BitmapData = BitmapData.fromFile("assets/shared/images/fpstuff/" + i);
-				var graph = FlxGraphic.fromBitmapData(data);
-				graph.persist = true;
-				graph.destroyOnNoUse = false;
-				bitmapData.set(replaced,graph);
-				trace(i);
-			}
+		//for (i in freeplay)
+		//	{
+		//		var replaced = i.replace(".png","");
+		//		var data:BitmapData = BitmapData.fromFile("assets/shared/images/fpstuff/" + i);
+		//		var graph = FlxGraphic.fromBitmapData(data);
+		//		graph.persist = true;
+		//		graph.destroyOnNoUse = false;
+		//		bitmapData.set(replaced,graph);
+		//		trace(i);
+		//	}
 
 		for (i in encore)
 		{
