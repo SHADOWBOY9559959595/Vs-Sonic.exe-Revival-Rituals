@@ -80,7 +80,7 @@ class ChartingState extends MusicBeatState
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
 		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
-		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
+		['Change Character', "Value 1: Character to change (dad, bf, gf, bf2, dad2)\nValue 2: New character's name"],
 		['Change Stage', "Value 1: New stages name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
@@ -95,7 +95,6 @@ class ChartingState extends MusicBeatState
 		['Green Hill', "Exclusive to YCR Stage\nValue 1: if set to GH, it'll turn everything into GH stage\n if set to noGH it'll turn everithing into normal YCR stage."],
 		['Pickel', "Lol pickel reference\nValue 1:\nye sets sonicHUD on\nno sets normal ui "],
 		['Countdown', "Funny countdown (liv blenk)."],
-		['Song End', "Funny Song ending\nvalue 1: tweening in bars speed."],
 		['Change Noteskin', "Funny Song change noteskin\nvalue 1: new noteskin name.\nNEEDS TO BE IN NOTESKINS\n AND HAVE 'NOTE_assets-name'\nif youre not stupid, name needs to be your noteskin"],
 		['Majin count', "Majin fucking says fuck what a fuckitty fuck o my fucking god fuck shit cock and balls fucking my fucking cock is fucking my fucking i dont fucking now oh my fucking god"],
 		['Fleet Attack', "FLEET FUCKING ATTACKS OH MY GOD"],
@@ -2244,7 +2243,7 @@ class ChartingState extends MusicBeatState
 			note.alpha = 1;
 			if(curSelectedNote != null) {
 				var noteDataToCheck:Int = note.noteData;
-				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
+				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
 
 				if (curSelectedNote[0] == note.strumTime && ((curSelectedNote[2] == null && noteDataToCheck < 0) || (curSelectedNote[2] != null && curSelectedNote[1] == noteDataToCheck)))
 				{
@@ -2258,7 +2257,7 @@ class ChartingState extends MusicBeatState
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
 					var noteDataToCheck:Int = note.noteData;
-					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
+					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
 					if(!playedSound[data]) {
@@ -2273,7 +2272,7 @@ class ChartingState extends MusicBeatState
 						}
 
 						data = note.noteData;
-						if(note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section)
+						if(note.mustPress != _song.notes[curSec].mustHitSection)
 						{
 							data += 4;
 						}
@@ -2843,7 +2842,7 @@ class ChartingState extends MusicBeatState
 			}
 			note.mustPress = _song.notes[curSec].mustHitSection; 
 
-			if(i[1] > 3 && !_song.notes[curSec].bf2Section) {
+			if(i[1] > 3) {
 				note.mustPress = !note.mustPress; 
 			}
 		}
@@ -2935,7 +2934,7 @@ class ChartingState extends MusicBeatState
 		note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 		note.updateHitbox();
 		note.x = Math.floor(daNoteInfo * GRID_SIZE) + GRID_SIZE;
-		if(isNextSection && _song.notes[curSec].mustHitSection && _song.notes[curSec].bf2Section != _song.notes[curSec+1].mustHitSection != _song.notes[curSec+1].bf2Section) {
+		if(isNextSection && _song.notes[curSec].mustHitSection != _song.notes[curSec+1].mustHitSection) {
 			if(daNoteInfo > 3) {
 				note.x -= GRID_SIZE * 4;
 			} else if(daSus != null) {
@@ -2996,7 +2995,7 @@ class ChartingState extends MusicBeatState
 
 		if(noteDataToCheck > -1)
 		{
-			if(note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4;
+			if(note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
 			for (i in _song.notes[curSec].sectionNotes)
 			{
 				if (i != curSelectedNote && i.length > 2 && i[0] == note.strumTime && i[1] == noteDataToCheck)
@@ -3027,7 +3026,7 @@ class ChartingState extends MusicBeatState
 	function deleteNote(note:Note):Void 
 	{ 
 	    var noteDataToCheck:Int = note.noteData; 
-	    if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection != _song.notes[curSec].bf2Section) noteDataToCheck += 4; 
+	    if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4; 
 
     	if(note.noteData > -1) //Normal Notes 
     	{ 
