@@ -12,63 +12,14 @@ import backend.Song;
 import states.MainMenuState;
 import backend.SonicTransitionState;
 import flixel.addons.display.FlxTiledSprite;
+import backend.CharSongList;
 
 class FreeplayState extends MusicBeatState
 {
-    var weekNames:Array<String> = [
-        'majin', 'lordx', 'devoid', 'tails-doll', 'no-name', 'sally-alt', 'exeterior', 
-        'fleetway', 'fatal-error', 'starved', 'xterion', 'educator', 'normal-cd', 'needlem0use', 
-        'luther', 'sunky', 'sanic', 'coldsteel', 'sonichu', 'sonic', 'ugly-sonic', 
-        'lumpy-sonic', 'melthog', 'faker', 'chaotix', 'requital', 'hog', 'grimeware', 
-        'curse', 'monobw', 'no-more-innocence', 'dsk', 'demogri-and-griatos', 'blaze', 'satanos', 'apollyon', 
-        'bratwurst', 'sl4sh', 'hellmas', 'batman', 'secret-history', 'omw', 'game-over'
-    ];
+    var weekNames = CharSongList.weekNamesFP;
     
-    var songsByWeek:Map<String, Array<String>> = [
-        'majin' => ['endless', 'endless-og', 'endless-us', 'endless-jp', 'endeavours'],
-        'lordx' => ['execution', 'cycles', 'hellbent', 'fate', 'judgement', 'gatekeepers'],
-        'devoid' => ['trickery'],
-        'tails-doll' => ['sunshine', 'soulles'],
-        'no-name' => ['forever-unnamed'],
-        'sally-alt' => ['agony'],
-        'exeterior' => ['sharpy-showdown'],
-        'fleetway' => ['chaos', 'running-wild', 'heroes-and-villains'],
-        'fatal-error' => ['fatality'],
-        'starved' => ['prey', 'fight-or-flight'],
-        'xterion' => ['substantial', 'digitalized'],
-        'educator' => ['expulsion'],
-        'normal-cd' => ['found-you'],
-        'needlem0use' => ['relax', 'round-a-bout', 'spike-trap'],
-        'luther' => ['her-world'],
-        'sunky' => ['milk'],
-        'sanic' => ['too-fest'],
-        'coldsteel' => ['personel', 'personel-serious'],
-        'sonichu' => ['shocker', 'extreme-zap'],
-        'sonic' => ['soured'],
-        'ugly-sonic' => ['ugly'],
-        'lumpy-sonic' => ['frenzy'],
-        'melthog' => ['melting', 'confronting'],
-        'faker' => ['faker', 'black-sun', 'godspeed'],
-        'chaotix' => ['my-horizon', 'our-horizon'],
-        'requital' => ['foretall-desire'],
-        'hog' => ['hedge', 'manual-blast'],
-        'grimeware' => ['gorefest'],
-        'curse' => ['malediction', 'extricate-hex'],
-        'monobw' => ['color-blind'],
-        'no-more-innocence' => ['fake-baby'],
-        'dsk' => ['miasma'],
-        'demogri-and-griatos' => ['insidious', 'haze', 'marauder'],
-        'blaze' => ['burning'],
-        'satanos' => ['perdition', 'underworld', 'purgatory'],
-        'apollyon' => ['genesis', 'proverbs', 'corinthians', 'revelations'],
-        'bratwurst' => ['gods-will'],
-        'sl4sh' => ['b4cksl4sh'],
-        'hellmas' => ['missiletoe', 'slaybells', 'jingle-hells'],
-        'batman' => ['gotta-go'],
-        'secret-history' => ['mania'],
-        'omw' => ['universal-collapse'],
-        'game-over' => ['too-far']
-    ];
+    var songsByWeek = CharSongList.songsByWeekFP;
+
     var weekSelec:Int = 0;
     var songSelec:Int = 0;
     var curSub:String = 'weeks';
@@ -143,7 +94,7 @@ class FreeplayState extends MusicBeatState
 
     override public function update(elapsed:Float):Void {
         super.update(elapsed);
-    
+            
         sidebar.scrollY -= (sidebarScrollSpeed * sidebar.scrollFactor.y) * (elapsed/(1/120));
     
         if (curSub == 'weeks') {
@@ -210,7 +161,7 @@ class FreeplayState extends MusicBeatState
                 FlxTween.tween(white, {alpha: 1}, 1, {onComplete:
                     function(twn:FlxTween) {
                         var songs:Array<String> = songsByWeek[weekNames[weekSelec]];
-                        PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase() + '-hard', songs[songSelec].toLowerCase());
+                        PlayState.SONG = Song.loadFromJson(songs[songSelec].toLowerCase(), songs[songSelec].toLowerCase());
                         PlayState.isStoryMode = false;
                         LoadingState.loadAndSwitchState(new PlayState());
                     }
@@ -295,7 +246,7 @@ class FreeplayState extends MusicBeatState
             }
         }
     }
-    
+
     public static function destroyFreeplayVocals() {
         if(vocals != null) {
             vocals.stop();

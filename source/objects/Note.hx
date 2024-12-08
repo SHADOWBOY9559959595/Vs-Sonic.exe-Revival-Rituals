@@ -408,11 +408,6 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
-		if (PlayState.isPixelStage) {
-			reloadNote();  // Ensure pixel assets are applied continuously
-			//loadPixelNoteAnims();  // Ensure pixel sustain tails are applied
-		}
-
 		if (mustPress)
 		{
 			canBeHit = (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult) &&

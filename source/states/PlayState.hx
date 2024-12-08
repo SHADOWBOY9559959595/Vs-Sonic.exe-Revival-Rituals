@@ -30,6 +30,7 @@ import states.editors.ChartingState;
 import states.editors.CharacterEditorState;
 
 import substates.PauseSubState;
+import substates.OGPauseSubState;
 import substates.GameOverSubstate;
 
 #if !flash
@@ -74,8 +75,9 @@ import flixel.FlxState;
 import openfl.Lib;
 import objects.FatalPopup;
 
-//chaos intro shit
+//Stage intro shit
 import states.stages.Fleetway;
+import states.stages.Prey;
 
 //Shaders shit
 import shaders.VCRDistortionShader;
@@ -397,6 +399,8 @@ class PlayState extends MusicBeatState
 				startCallback = startCountdown;
 			case 'chaos':
 				startCallback = chaosIntro;
+			case 'prey':
+				startCallback = preyIntro;
 			case 'milk':
 				startCallback = sunkIntro;
 				sunkerTimebarFuckery = true;
@@ -413,7 +417,6 @@ class PlayState extends MusicBeatState
 		// for lua
 		instance = this;
 
-		PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed');
 
 		keysArray = [
@@ -1126,11 +1129,6 @@ class PlayState extends MusicBeatState
 		for (i in 1...4) Paths.sound('missnote$i');
 		Paths.image('alphabet');
 
-		if (PauseSubState.songName != null)
-			Paths.music(PauseSubState.songName);
-		else if(Paths.formatToSongPath(ClientPrefs.data.pauseMusic) != 'none')
-			Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic));
-
 		resetRPC();
 
 		callOnScripts('onCreatePost');
@@ -1739,6 +1737,20 @@ class PlayState extends MusicBeatState
 				});
 			});
 		});
+	}
+
+	public function preyIntro () {
+		startCountdown();
+
+		FlxG.camera.zoom = defaultCamZoom + 0.2;
+
+		FlxTween.tween(dad, {x: -3000}, 0.1);
+
+		camHUD.alpha = 0;
+		dad.visible = false;
+		boyfriend.alpha = 0;
+
+		FlxTween.tween(boyfriend, {alpha: 1}, 7);
 	}
 	
 	public function startCountdown()
@@ -2896,7 +2908,10 @@ class PlayState extends MusicBeatState
 					note.resetAnim = 0;
 				}
 		}
-		openSubState(new PauseSubState());
+		if (chartingMode)
+			openSubState(new OGPauseSubState());
+		else
+			openSubState(new PauseSubState());
 
 		#if DISCORD_ALLOWED
 		if(autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -3629,7 +3644,7 @@ class PlayState extends MusicBeatState
     			    FlxG.log.warn('ERROR ("Set Cam Follow" Event) - Invalid character: ' + value1);
     			}
 			case 'Needle Text':
-				var texts:Array<String> = ['1963','I KNOw wHERe yoU livE','I\'M TRAPPED','30 YEARS','30 LONG YEARS..','MOM','DAD','LILY','I REMEMBER EVERYTHING','THERE IS NO GOD.','YOU ARE IN MY WORLD NOW.','803 Branch Lane Kennersville, NC 27284','I CAN STILL FEEL THE PAIN', 'Damn, this gyatt is a lot harder than i thought'];
+				var texts:Array<String> = ['1963','I KNOw wHERe yoU livE','I\'M TRAPPED','30 YEARS','30 LONG YEARS..','MOM','DAD','LILY','I REMEMBER EVERYTHING','THERE IS NO GOD.','YOU ARE IN MY WORLD NOW.','803 Branch Lane Kennersville, NC 27284','I CAN STILL FEEL THE PAIN', 'GYATT'];
 				var textlook:FlxText;
 				var randomIndex:Int = Std.random(texts.length);
 				var selectedText:String = texts[randomIndex]; 
@@ -3655,6 +3670,7 @@ class PlayState extends MusicBeatState
 						needlestat.screenCenter(XY);
 						needlestat.camera = camOther;
 						add(needlestat);
+						FlxTween.tween(needlestat, { alpha: 0.9 }, 1, { type: FlxTween.PINGPONG });
 					}
 
 				if(value1 == '1')
@@ -4278,10 +4294,10 @@ class PlayState extends MusicBeatState
 			if (!holdArray.contains(true) || endingSong)
 			{
 				playerDance();
-					if(SONG.isBf2)
-					{
-						player2Dance();
-					}		
+
+				if(SONG.isBf2)
+					player2Dance();	
+
 			}
 		}
 
@@ -5410,5 +5426,5 @@ class PlayState extends MusicBeatState
 			{
 				Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-10, 10), Lib.application.window.y + FlxG.random.int(-8, 8));
 			}, 50);
-		}		
+		}
 }
